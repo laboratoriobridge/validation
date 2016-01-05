@@ -28,7 +28,7 @@ gulp.task('test', ['typescript'], function() {
 });
 
 gulp.task('clean', function(cb) {
-  del.sync(['lib/'], cb);
+  del.sync(['dist/'], cb);
 });
 
 gulp.task('watch', ['test'], function() {

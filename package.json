@@ -1,5 +1,5 @@
 {
-  "name": "validation.js",
+  "name": "bridge-validation.js",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
