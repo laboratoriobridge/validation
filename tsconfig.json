@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "jsx": "react",
+        "outDir": "dist",
+        "declaration": true,
+        "sourceMap": false
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "filesGlob": [
+        "src/**/*.{ts,tsx}",
+        "typings/**/*.ts"
+    ],
+    "files": [
+        "src/index.ts",
+        "src/result.ts",
+        "src/validation.ts",
+        "src/validators.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}

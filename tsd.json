@@ -1,0 +1,10 @@
+{
+  "version": "v4",
+  "repo": "bridge-ufsc/DefinitelyTyped",
+  "ref": "bridge",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+
+  }
+}
