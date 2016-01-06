@@ -7,12 +7,12 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 
 var TS_FILES = 'src/**/*.ts';
-var TEST_FILES = '/src/**/__tests__/**/*.{ts,tsx,js}';
+var TEST_FILES = 'src/**/__tests__/**/*.{ts,tsx,js}';
 
 gulp.task('typescript', function() {
   var tsProject = ts.createProject('tsconfig.json');
 
-  var tsResult = gulp.src(TS_FILES)
+  var tsResult = tsProject.src()
                      .pipe(ts(tsProject));
 
     return merge([
@@ -22,7 +22,7 @@ gulp.task('typescript', function() {
 });
 
 gulp.task('test', ['typescript'], function() {
-  require('babel/register');
+  require('ts-node/register');
   return gulp.src(TEST_FILES, {read: false})
           .pipe(mocha({ reporter: 'dot' }));
 });

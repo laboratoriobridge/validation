@@ -3,11 +3,13 @@
         "target": "es5",
         "module": "commonjs",
         "jsx": "react",
+        "rootDir": "src",
         "outDir": "dist",
         "declaration": true,
         "sourceMap": false
     },
     "exclude": [
+        "src/**/__tests__/*.{ts,tsx}",
         "node_modules",
         "dist"
     ],
@@ -18,8 +20,14 @@
     "files": [
         "src/index.ts",
         "src/result.ts",
+        "src/rules/index.ts",
+        "src/rules/Length.ts",
+        "src/rules/Required.ts",
         "src/validation.ts",
-        "src/validators.ts"
+        "src/validators.ts",
+        "typings/mocha/mocha.d.ts",
+        "typings/node/node.d.ts",
+        "typings/tsd.d.ts"
     ],
     "atom": {
         "rewriteTsconfig": true

@@ -5,6 +5,11 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
-
+    "node/node.d.ts": {
+      "commit": "7f79b3d1b3b9d7e3e4dada883493bac6cc84e1ac"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "7f79b3d1b3b9d7e3e4dada883493bac6cc84e1ac"
+    }
   }
 }

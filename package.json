@@ -1,6 +1,6 @@
 {
   "name": "bridge-validation.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index",
@@ -11,7 +11,6 @@
   "author": "Bridge",
   "license": "ISC",
   "devDependencies": {
-    "babel": "^5.8.29",
     "browserify": "^12.0.1",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
@@ -19,7 +18,8 @@
     "gulp-typescript": "^2.9.2",
     "merge2": "^0.3.6",
     "typescript": "^1.6.2",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "ts-node": "^0.5.5"
   },
   "peerDependencies": {
 
