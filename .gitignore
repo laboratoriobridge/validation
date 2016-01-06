@@ -2,3 +2,4 @@ typings/
 tmp/
 node_modules/
 lib/
+dist/**/__tests__/*

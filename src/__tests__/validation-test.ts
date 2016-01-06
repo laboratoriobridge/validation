@@ -4,10 +4,6 @@ import assert = require('assert');
 
 import * as Validation from '../';
 
-/**
- * Os testes unitários das Rules estão no Java (jUnit)
- */
-
 // Dummy rules for testing
 var NotARule = {
   message: "Value should not contain letter 'a'",
