@@ -1,38 +1,33 @@
 var gulp = require('gulp');
-var ts = require('gulp-typescript');
-var merge = require('merge2');
+var babel = require("gulp-babel");
 var del = require('del');
-var mocha = require('gulp-mocha');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 
-var TS_FILES = 'src/**/*.ts';
-var TEST_FILES = 'src/**/__tests__/**/*.{ts,tsx,js}';
+var JS_FILES = 'src/main/script/**/*.js';
+var TEST_FILES = 'src/test/script/**/*.js';
 
-gulp.task('typescript', function() {
-  var tsProject = ts.createProject('tsconfig.json');
 
-  var tsResult = tsProject.src()
-                     .pipe(ts(tsProject));
-
-    return merge([
-        tsResult.dts.pipe(gulp.dest('dist/')),
-        tsResult.js.pipe(gulp.dest('dist/'))
-    ]);
+gulp.task("babel", function () {
+  return gulp.src(JS_FILES)
+    .pipe(babel())
+    .pipe(gulp.dest("lib"));
 });
 
-gulp.task('test', ['typescript'], function() {
-  require('ts-node/register');
-  return gulp.src(TEST_FILES, {read: false})
-          .pipe(mocha({ reporter: 'dot' }));
+gulp.task('server-bundle', ['babel'], function () {
+  var b = browserify({
+    debug: false,
+    entries: './lib/index.js',
+    standalone: 'validation'
+  });
+
+  return b.bundle()
+    .pipe(source('server-bundle.js'))
+    .pipe(gulp.dest('./lib/'));
 });
 
-gulp.task('clean', function(cb) {
-  del.sync(['dist/'], cb);
+gulp.task('clean', function (cb) {
+  del.sync(['lib/'], cb);
 });
 
-gulp.task('watch', ['test'], function() {
-  gulp.watch([TEST_FILES, TS_FILES], ['test']);
-});
-
-gulp.task('default', ['clean', 'typescript', 'test']);
+gulp.task('default', ['clean', 'babel', 'server-bundle']);
