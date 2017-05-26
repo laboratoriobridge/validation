@@ -21,29 +21,29 @@ public interface FormError extends ValidationError {
 	void cpf(String campo);
 
 	void dataNasc(String campo);
-	
+
 	void dataMax(String campo);
-	
+
 	void duracao(String campo);
-	
+
 	void email(String campo);
 
 	void hora(String campo);
 
-	void length(String campo, int length);
-	
-	void maxLength(String campo, int maxLength);
-	
-	void maxRange(String campo, int maxRange);
-	
-	void minLength(String campo, int minLength);
-	
-	void minRange(String campo, int minRange);
-	
+	void length(String campo, Number length);
+
+	void maxLength(String campo, Number maxLength);
+
+	void maxRange(String campo, Number maxRange);
+
+	void minLength(String campo, Number minLength);
+
+	void minRange(String campo, Number minRange);
+
 	void nome(String campo);
 
-	void range(String campo, int minRange, int maxRange);
-	
+	void range(String campo, Number minRange, Number maxRange);
+
 	void registroAnvisa(String campo);
 
 	void required(String campo);

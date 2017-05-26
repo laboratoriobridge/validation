@@ -7,12 +7,12 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public class MinLengthRule implements Rule {
 
-	private final int minLength;
-	
-	public MinLengthRule(int minLength) {
+	private final Number minLength;
+
+	public MinLengthRule(Number minLength) {
 		this.minLength = minLength;
 	}
-	
+
 	@Override
 	public Object get(Engine engine) throws ScriptException {
 		return engine.evalRule("minLength("+this.minLength+")");

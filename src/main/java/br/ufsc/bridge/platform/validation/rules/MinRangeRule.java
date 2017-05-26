@@ -7,12 +7,12 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public class MinRangeRule implements Rule {
 
-	private final int minRange;
-	
-	public MinRangeRule(int minRange) {
+	private final Number minRange;
+
+	public MinRangeRule(Number minRange) {
 		this.minRange = minRange;
 	}
-	
+
 	@Override
 	public Object get(Engine engine) throws ScriptException {
 		return engine.evalRule("minRange("+this.minRange+")");

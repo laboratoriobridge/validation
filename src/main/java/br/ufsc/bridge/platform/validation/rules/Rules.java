@@ -22,27 +22,27 @@ public class Rules {
 		// nada a fazer
 	}
 
-	public static Rule length(int length) {
+	public static Rule length(Number length) {
 		return new LengthRule(length);
 	}
 
-	public static Rule maxLength(int maxLength) {
+	public static Rule maxLength(Number maxLength) {
 		return new MaxLengthRule(maxLength);
 	}
 
-	public static Rule minLength(int minLength) {
+	public static Rule minLength(Number minLength) {
 		return new MinLengthRule(minLength);
 	}
 
-	public static Rule range(int minRange, int maxRange) {
+	public static Rule range(Number minRange, Number maxRange) {
 		return new RangeRule(minRange, maxRange);
 	}
 
-	public static Rule maxRange(int maxRange) {
+	public static Rule maxRange(Number maxRange) {
 		return new MaxRangeRule(maxRange);
 	}
 
-	public static Rule minRange(int minRange) {
+	public static Rule minRange(Number minRange) {
 		return new MinRangeRule(minRange);
 	}
 }

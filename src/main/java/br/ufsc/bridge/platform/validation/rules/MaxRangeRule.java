@@ -7,12 +7,12 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public class MaxRangeRule implements Rule {
 
-	private final int maxRange;
-	
-	public MaxRangeRule(int maxRange) {
+	private final Number maxRange;
+
+	public MaxRangeRule(Number maxRange) {
 		this.maxRange = maxRange;
 	}
-	
+
 	@Override
 	public Object get(Engine engine) throws ScriptException {
 		return engine.evalRule("maxRange("+this.maxRange+")");

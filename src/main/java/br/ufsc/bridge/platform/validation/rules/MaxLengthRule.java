@@ -7,12 +7,12 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public class MaxLengthRule implements Rule {
 
-	private final int maxLength;
-	
-	public MaxLengthRule(int maxLength) {
+	private final Number maxLength;
+
+	public MaxLengthRule(Number maxLength) {
 		this.maxLength = maxLength;
 	}
-	
+
 	@Override
 	public Object get(Engine engine) throws ScriptException {
 		return engine.evalRule("maxLength("+this.maxLength+")");

@@ -138,7 +138,7 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	public void cep(String campo) {
 		this.runRule(campo, Rules.cep);
 	}
-	
+
 	@Override
 	public void cpf(String campo) {
 		this.runRule(campo, Rules.cpf);
@@ -168,57 +168,57 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	public void duracao(String campo) {
 		this.runRule(campo, Rules.duracao);
 	}
-	
+
 	@Override
 	public void email(String campo) {
 		this.runRule(campo, Rules.email);
 	}
-	
+
 	@Override
 	public void hora(String campo) {
 		this.runRule(campo, Rules.hora);
 	}
 
 	@Override
-	public void length(String campo, int length) {
+	public void length(String campo, Number length) {
 		this.runRule(campo, Rules.length(length));
 	}
-	
+
 	@Override
-	public void maxLength(String campo, int maxLength) {
+	public void maxLength(String campo, Number maxLength) {
 		this.runRule(campo, Rules.maxLength(maxLength));
 	}
-	
+
 	@Override
-	public void maxRange(String campo, int maxRange) {
+	public void maxRange(String campo, Number maxRange) {
 		this.runRule(campo, Rules.maxRange(maxRange));
 	}
-	
+
 	@Override
-	public void minLength(String campo, int minLength) {
+	public void minLength(String campo, Number minLength) {
 		this.runRule(campo, Rules.minLength(minLength));
 	}
-	
+
 	@Override
-	public void minRange(String campo, int minRange) {
+	public void minRange(String campo, Number minRange) {
 		this.runRule(campo, Rules.minRange(minRange));
 	}
-	
+
 	@Override
 	public void nome(String campo) {
 		this.runRule(campo, Rules.nome);
 	}
-	
+
 	@Override
-	public void range(String campo, int minRange, int maxRange) {
+	public void range(String campo, Number minRange, Number maxRange) {
 		this.runRule(campo, Rules.range(minRange, maxRange));
 	}
-	
+
 	@Override
 	public void registroAnvisa(String campo) {
 		this.runRule(campo, Rules.registroAnvisa);
 	}
-	
+
 	@Override
 	public void required(String campo) {
 		this.runRule(campo, Rules.required);
@@ -228,5 +228,5 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	public void telefone(String campo) {
 		this.runRule(campo, Rules.telefone);
 	}
-	
+
 }

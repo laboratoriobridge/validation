@@ -7,12 +7,12 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public class LengthRule implements Rule {
 
-	private final int length;
-	
-	public LengthRule(int length) {
+	private final Number length;
+
+	public LengthRule(Number length) {
 		this.length = length;
 	}
-	
+
 	@Override
 	public Object get(Engine engine) throws ScriptException {
 		return engine.evalRule("length("+this.length+")");
