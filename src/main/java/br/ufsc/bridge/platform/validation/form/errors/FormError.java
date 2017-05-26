@@ -48,6 +48,8 @@ public interface FormError extends ValidationError {
 
 	void required(String campo);
 
+	void senha(String campo);
+
 	void telefone(String campo);
 
 	boolean fieldIsValid(String form);

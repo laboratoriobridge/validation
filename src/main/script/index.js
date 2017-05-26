@@ -12,6 +12,7 @@ export * from './rules/nome';
 export * from './rules/range';
 export * from './rules/registroAnvisa';
 export * from './rules/required';
+export * from './rules/senha';
 export * from './rules/telefone';
 export * from './rules/alfaNumerico';
 

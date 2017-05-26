@@ -225,6 +225,11 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	}
 
 	@Override
+	public void senha(String campo) {
+		this.runRule(campo, Rules.senha);
+	}
+
+	@Override
 	public void telefone(String campo) {
 		this.runRule(campo, Rules.telefone);
 	}
