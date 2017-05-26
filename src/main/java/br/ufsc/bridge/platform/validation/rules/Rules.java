@@ -16,6 +16,7 @@ public class Rules {
 	public static final NomeRule nome = new NomeRule();
 	public static final RegistroAnvisaRule registroAnvisa = new RegistroAnvisaRule();
 	public static final RequiredRule required = new RequiredRule();
+	public static final SenhaRule senha = new SenhaRule();
 	public static final TelefoneRule telefone = new TelefoneRule();
 
 	private Rules() {
