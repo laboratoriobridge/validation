@@ -30,7 +30,7 @@ export function createValidator(rules, validator) {
         });
 
         if (validator) {
-            Object.assign(errors, validator(data));
+            Object.assign(validator(data), errors);
         }
 
         return errors;
