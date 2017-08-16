@@ -135,6 +135,11 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 
 	// Regras
 	@Override
+	public void alfaNumerico(String campo) {
+		this.runRule(campo, Rules.alfaNumerico);
+	}
+
+	@Override
 	public void cep(String campo) {
 		this.runRule(campo, Rules.cep);
 	}
@@ -182,6 +187,11 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	@Override
 	public void length(String campo, Number length) {
 		this.runRule(campo, Rules.length(length));
+	}
+
+	@Override
+	public void logradouro(String campo) {
+		this.runRule(campo, Rules.logradouro);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public class Rules {
 
+	public static final AlfaNumericoRule alfaNumerico = new AlfaNumericoRule();
 	public static final CepRule cep = new CepRule();
 	public static final CnpjRule cnpj = new CnpjRule();
 	public static final CnsRule cns = new CnsRule();
@@ -12,6 +13,7 @@ public class Rules {
 	public static final DuracaoRule duracao = new DuracaoRule();
 	public static final EmailRule email = new EmailRule();
 	public static final HoraRule hora = new HoraRule();
+	public static final LogradouroRule logradouro = new LogradouroRule();
 	public static final MaxDateRule maxDate = new MaxDateRule();
 	public static final NomeRule nome = new NomeRule();
 	public static final RegistroAnvisaRule registroAnvisa = new RegistroAnvisaRule();
