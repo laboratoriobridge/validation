@@ -6,7 +6,7 @@ import Immutable from 'immutable'
 var REGEX = /([^A-Za-záéíóúÁÉÍÓÚçÇâêôÂÊÔõãÕÃäöüÄÖÜàÀ' ])/;
 
 export function nome(value) {
-	if (!Util.isEmpty(value) && isSomenteLetras(value)) {
+	if (!Util.isEmpty(value) && isNotSomenteLetras(value)) {
 		return Immutable.Map({
 			titulo: "Caracter não permitido",
 			mensagem: "Um ou mais caracteres informados não são permitidos para esse campo"
@@ -19,7 +19,7 @@ export function nome(value) {
 		});
 	}
 }
-function isSomenteLetras(value) {
+function isNotSomenteLetras(value) {
 	return REGEX.test(value);
 }
 

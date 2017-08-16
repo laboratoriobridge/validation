@@ -12,6 +12,8 @@ public interface FormError extends ValidationError {
 
 	void fieldError(String campo, FieldError error);
 
+	void alfaNumerico(String campo);
+
 	void cep(String campo);
 
 	void cnpj(String campo);
@@ -31,6 +33,8 @@ public interface FormError extends ValidationError {
 	void hora(String campo);
 
 	void length(String campo, Number length);
+
+	void logradouro(String campo);
 
 	void maxLength(String campo, Number maxLength);
 
