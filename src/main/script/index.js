@@ -9,7 +9,7 @@ export * from './rules/data';
 export * from './rules/email';
 export * from './rules/hora';
 export * from './rules/length';
-export * from './rules/logradouro';
+export * from './rules/match';
 export * from './rules/nome';
 export * from './rules/range';
 export * from './rules/registroAnvisa';
