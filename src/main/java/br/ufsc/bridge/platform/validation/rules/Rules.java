@@ -13,7 +13,6 @@ public class Rules {
 	public static final DuracaoRule duracao = new DuracaoRule();
 	public static final EmailRule email = new EmailRule();
 	public static final HoraRule hora = new HoraRule();
-	public static final LogradouroRule logradouro = new LogradouroRule();
 	public static final MaxDateRule maxDate = new MaxDateRule();
 	public static final NomeRule nome = new NomeRule();
 	public static final RegistroAnvisaRule registroAnvisa = new RegistroAnvisaRule();
@@ -47,5 +46,9 @@ public class Rules {
 
 	public static Rule minRange(Number minRange) {
 		return new MinRangeRule(minRange);
+	}
+
+	public static Rule match(String regex) {
+		return new MatchRule(regex);
 	}
 }
