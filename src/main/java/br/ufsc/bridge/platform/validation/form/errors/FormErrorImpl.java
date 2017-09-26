@@ -1,9 +1,10 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import org.joda.time.LocalDate;
 
 import br.ufsc.bridge.metafy.MetaField;
 import br.ufsc.bridge.metafy.MetaList;

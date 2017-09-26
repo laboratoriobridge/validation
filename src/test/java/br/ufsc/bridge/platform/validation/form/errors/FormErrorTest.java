@@ -1,7 +1,6 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
-import java.time.LocalDate;
-
+import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,19 +17,19 @@ public class FormErrorTest {
 
 		FormError errors = new FormErrorImpl(form);
 
-		errors.cep(meta.cep.getAlias());
-		errors.cnpj(meta.cnpj.getAlias());
-		errors.cns(meta.cns.getAlias());
-		errors.cpf(meta.cpf.getAlias());
-		errors.dataNasc(meta.dataNascimento.getAlias());
-		errors.duracao(meta.duracao.getAlias());
-		errors.email(meta.email.getAlias());
-		errors.hora(meta.hora.getAlias());
-		errors.dataMax(meta.maxDate.getAlias());
-		errors.nome(meta.nome.getAlias());
-		errors.registroAnvisa(meta.registroAnvisa.getAlias());
-		errors.required(meta.required.getAlias());
-		errors.telefone(meta.telefone.getAlias());
+		errors.cep(meta.cep);
+		errors.cnpj(meta.cnpj);
+		errors.cns(meta.cns);
+		errors.cpf(meta.cpf);
+		errors.dataNasc(meta.dataNascimento);
+		errors.duracao(meta.duracao);
+		errors.email(meta.email);
+		errors.hora(meta.hora);
+		errors.dataMax(meta.maxDate);
+		errors.nome(meta.nome);
+		errors.registroAnvisa(meta.registroAnvisa);
+		errors.required(meta.required);
+		errors.telefone(meta.telefone);
 
 		Assert.assertTrue(errors.isValid());
 	}
