@@ -13,18 +13,6 @@ public interface FormError extends ValidationError {
 	 * Usar o equivalente com MetaField.
 	 */
 	@Deprecated
-	FormError formError(String form);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	ListError listError(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
 	void fieldError(String campo, String titulo, String mensagem);
 
 	/**
@@ -37,127 +25,7 @@ public interface FormError extends ValidationError {
 	 * Usar o equivalente com MetaField.
 	 */
 	@Deprecated
-	void alfaNumerico(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void cep(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void cnpj(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void cns(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void cpf(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void dataNasc(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void dataMax(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void duracao(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void email(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void hora(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void length(String campo, Number length);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void maxLength(String campo, Number maxLength);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void maxRange(String campo, Number maxRange);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void minLength(String campo, Number minLength);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void minRange(String campo, Number minRange);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void nome(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
 	void range(String campo, Number minRange, Number maxRange);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void registroAnvisa(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void required(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void senha(String campo);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void telefone(String campo);
 
 	/**
 	 * Usar o equivalente com MetaField.
