@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@SuppressWarnings("rawtypes")
 public class ListErrorImpl extends ArrayList implements ListError {
 
 	private static final long serialVersionUID = 6107994429283159738L;

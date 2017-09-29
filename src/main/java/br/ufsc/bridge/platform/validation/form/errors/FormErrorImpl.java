@@ -29,15 +29,6 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	 */
 	@Deprecated
 	@Override
-	public void range(String campo, Number minRange, Number maxRange) {
-		this.runRule(campo, Rules.range(minRange, maxRange));
-	}
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	@Override
 	public void fieldError(String campo, String titulo, String mensagem) {
 		this.fieldError(campo, new FieldError(titulo, mensagem));
 	}
@@ -83,17 +74,8 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 
 	@Override
 	public boolean fieldIsValid(MetaField<?> field) {
-		return this.fieldIsValid(field.getAlias());
-	}
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	@Override
-	public boolean fieldIsValid(String campo) {
 		boolean valid = true;
-		ValidationError error = this.get(campo);
+		ValidationError error = this.get(field.getAlias());
 		if (error != null && error instanceof FieldError) {
 			valid = false;
 		} else if (error != null && error instanceof FormError) {
@@ -130,19 +112,15 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	}
 
 	private <F> void runRule(MetaField<F> field, Rule rule) {
-		this.runRule(field.getAlias(), rule);
-	}
-
-	private void runRule(String campo, Rule rule) {
-		if (this.fieldIsValid(campo)) {
+		if (this.fieldIsValid(field)) {
 			FieldError result;
 			if (this.target != null) {
-				result = Validation.get().validate(Reflections.getValue(this.target, campo), rule);
+				result = Validation.get().validate(Reflections.getValue(this.target, field.getAlias()), rule);
 			} else {
 				result = Validation.get().validate(null, rule);
 			}
 			if (result != null) {
-				this.fieldError(campo, result);
+				this.fieldError(field, result);
 			}
 		}
 	}
@@ -244,7 +222,7 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	}
 
 	@Override
-	public void maxRange(MetaField<Number> field, Number maxRange) {
+	public void maxRange(MetaField<? extends Number> field, Number maxRange) {
 		this.runRule(field, Rules.maxRange(maxRange));
 	}
 
@@ -254,7 +232,7 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	}
 
 	@Override
-	public void minRange(MetaField<Number> field, Number minRange) {
+	public void minRange(MetaField<? extends Number> field, Number minRange) {
 		this.runRule(field, Rules.minRange(minRange));
 	}
 

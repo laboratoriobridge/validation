@@ -1,8 +1,10 @@
 package br.ufsc.bridge.platform.validation.engine;
 
 import br.ufsc.bridge.platform.validation.form.errors.FieldError;
+
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
+@SuppressWarnings("restriction")
 public class Validation {
 
 	private static Validation instance;
