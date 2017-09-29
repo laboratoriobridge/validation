@@ -77,7 +77,7 @@ public interface FormError extends ValidationError {
 
 	void nome(MetaField<String> field);
 
-	void range(MetaField<Number> field, Number minRange, Number maxRange);
+	void range(MetaField<? extends Number> field, Number minRange, Number maxRange);
 
 	void registroAnvisa(MetaField<String> field);
 

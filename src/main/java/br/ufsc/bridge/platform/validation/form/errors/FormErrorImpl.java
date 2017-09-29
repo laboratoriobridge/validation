@@ -264,7 +264,7 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	}
 
 	@Override
-	public void range(MetaField<Number> field, Number minRange, Number maxRange) {
+	public void range(MetaField<? extends Number> field, Number minRange, Number maxRange) {
 		this.runRule(field, Rules.range(minRange, maxRange));
 	}
 

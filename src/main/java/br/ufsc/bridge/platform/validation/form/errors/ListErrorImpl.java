@@ -15,6 +15,7 @@ public class ListErrorImpl extends ArrayList implements ListError {
 		this.target = target;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public FormError itemError(int index) {
 		FormErrorImpl itemErrors = new FormErrorImpl(this.target.get(index));
@@ -22,6 +23,7 @@ public class ListErrorImpl extends ArrayList implements ListError {
 		return itemErrors;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean isValid() {
 		boolean valid = true;
