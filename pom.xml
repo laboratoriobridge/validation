@@ -3,7 +3,7 @@
 
 	<groupId>br.ufsc.bridge</groupId>
 	<artifactId>validation</artifactId>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.15</version>
 	<name>Bridge Platform - Validation</name>
 
 	<properties>
@@ -138,6 +138,6 @@
 		<connection>scm:git:git@github.com:laboratoriobridge/validation.git</connection>
 		<url>scm:git:git@github.com:laboratoriobridge/validation.git</url>
 		<developerConnection>scm:git:git@github.com:laboratoriobridge/validation.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>0.0.15</tag>
 	</scm>
 </project>
