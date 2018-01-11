@@ -6,8 +6,13 @@ import br.ufsc.bridge.platform.validation.form.errors.FieldError;
 
 public abstract class ValidationTest {
 
-	public FieldError validate(Object value, Rule rule) {
-		return Validation.get().validate(value, rule);
+	public String validate(Object value, Rule rule) {
+		FieldError fieldError = Validation.get().validate(value, rule);
+		if (fieldError == null) {
+			return null;
+		} else {
+			return fieldError.getMensagem();
+		}
 	}
-	
+
 }

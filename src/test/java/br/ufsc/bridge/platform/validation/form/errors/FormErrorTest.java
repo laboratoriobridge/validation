@@ -27,7 +27,6 @@ public class FormErrorTest {
 		errors.hora(meta.hora);
 		errors.dataMax(meta.maxDate);
 		errors.nome(meta.nome);
-		errors.registroAnvisa(meta.registroAnvisa);
 		errors.required(meta.required);
 		errors.telefone(meta.telefone);
 
@@ -46,7 +45,6 @@ public class FormErrorTest {
 		private String hora;
 		private LocalDate maxDate;
 		private String nome;
-		private String registroAnvisa;
 		private String required;
 		private String telefone;
 
@@ -128,14 +126,6 @@ public class FormErrorTest {
 
 		public void setNome(String nome) {
 			this.nome = nome;
-		}
-
-		public String getRegistroAnvisa() {
-			return this.registroAnvisa;
-		}
-
-		public void setRegistroAnvisa(String registroAnvisa) {
-			this.registroAnvisa = registroAnvisa;
 		}
 
 		public String getRequired() {

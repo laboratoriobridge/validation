@@ -1,33 +1,27 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "moduleResolution": "node",
         "module": "commonjs",
-        "jsx": "react",
-        "rootDir": "src",
-        "outDir": "dist",
+        "target": "es5",
+        "lib": [
+            "es2017",
+            "dom"
+        ],
+        "outDir": "lib",
+        "suppressImplicitAnyIndexErrors": true,
+        "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
+        "noUnusedLocals": true,
+        "sourceMap": true,
         "declaration": true,
-        "sourceMap": false
+        "jsx": "react"
     },
     "exclude": [
+        "lib",
         "node_modules",
-        "dist"
-    ],
-    "filesGlob": [
-        "src/**/*.{ts,tsx}",
-        "typings/**/*.ts"
     ],
     "files": [
-        "src/__tests__/validation-test.ts",
-        "src/index.ts",
-        "src/result.ts",
-        "src/rules/index.ts",
-        "src/rules/Length.ts",
-        "src/rules/Required.ts",
-        "src/validation.ts",
-        "src/validators.ts",
-        "typings/mocha/mocha.d.ts",
-        "typings/node/node.d.ts",
-        "typings/tsd.d.ts"
+        "src/main/script/index.ts",
     ],
     "atom": {
         "rewriteTsconfig": true

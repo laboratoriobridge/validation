@@ -1,6 +1,10 @@
 src/
 target/
 .settings/
+.vscode/
+_bundles/
+**/tsconfig.json
+**/webpack.config.js
 
 .classpath
 .factorypath

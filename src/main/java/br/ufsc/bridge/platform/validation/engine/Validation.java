@@ -2,9 +2,6 @@ package br.ufsc.bridge.platform.validation.engine;
 
 import br.ufsc.bridge.platform.validation.form.errors.FieldError;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-
-@SuppressWarnings("restriction")
 public class Validation {
 
 	private static Validation instance;
@@ -23,9 +20,9 @@ public class Validation {
 	}
 
 	public FieldError validate(Object value, Rule rule) {
-		ScriptObjectMirror result = (ScriptObjectMirror) this.engine.serverValidate(value, rule);
-		if (result != null) {
-			return new FieldError((String) result.get("titulo"), (String) result.get("mensagem"));
+		String errorMessage = (String) this.engine.serverValidate(value, rule);
+		if (errorMessage != null) {
+			return new FieldError(errorMessage);
 		}
 		return null;
 	}

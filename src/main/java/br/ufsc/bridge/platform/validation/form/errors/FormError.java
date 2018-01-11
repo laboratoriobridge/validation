@@ -15,7 +15,7 @@ public interface FormError extends ValidationError {
 	 * Usar o equivalente com MetaField.
 	 */
 	@Deprecated
-	void fieldError(String campo, String titulo, String mensagem);
+	void fieldError(String campo, String mensagem);
 
 	/**
 	 * Usar o equivalente com MetaField.
@@ -23,7 +23,7 @@ public interface FormError extends ValidationError {
 	@Deprecated
 	void fieldError(String campo, FieldError error);
 
-	void fieldError(MetaField<?> field, String titulo, String mensagem);
+	void fieldError(MetaField<?> field, String mensagem);
 
 	void fieldError(MetaField<?> field, FieldError error);
 
@@ -66,8 +66,6 @@ public interface FormError extends ValidationError {
 	void nome(MetaField<String> field);
 
 	void range(MetaField<? extends Number> field, Number minRange, Number maxRange);
-
-	void registroAnvisa(MetaField<String> field);
 
 	void required(MetaField<?> field);
 

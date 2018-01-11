@@ -15,12 +15,12 @@ import br.ufsc.bridge.platform.validation.exception.EngineInitializationExceptio
 public class Engine {
 
 	private static final String NAMESPACE = "validation";
-	private static final String SERVER_VALIDATE = "serverValidate";
+	private static final String SERVER_VALIDATE = "validate";
 	private final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
 
 	public Engine(){
 		try {
-			InputStream resource = this.getClass().getResourceAsStream("/server-bundle.js");
+			InputStream resource = this.getClass().getResourceAsStream("/server-bundle.min.js");
 			if (resource == null) {
 				throw new EngineInitializationException("Não foi possível encontrar o server-bundle.js para validação");
 			}

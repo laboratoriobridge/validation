@@ -29,13 +29,13 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	 */
 	@Deprecated
 	@Override
-	public void fieldError(String campo, String titulo, String mensagem) {
-		this.fieldError(campo, new FieldError(titulo, mensagem));
+	public void fieldError(String campo, String mensagem) {
+		this.fieldError(campo, new FieldError(mensagem));
 	}
 
 	@Override
-	public void fieldError(MetaField<?> field, String titulo, String mensagem) {
-		this.fieldError(field.getAlias(), new FieldError(titulo, mensagem));
+	public void fieldError(MetaField<?> field, String mensagem) {
+		this.fieldError(field.getAlias(), new FieldError(mensagem));
 	}
 
 	/**
@@ -244,11 +244,6 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	@Override
 	public void range(MetaField<? extends Number> field, Number minRange, Number maxRange) {
 		this.runRule(field, Rules.range(minRange, maxRange));
-	}
-
-	@Override
-	public void registroAnvisa(MetaField<String> field) {
-		this.runRule(field, Rules.registroAnvisa);
 	}
 
 	@Override
