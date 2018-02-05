@@ -1,8 +1,8 @@
-import { createValidator, required } from '../../index'
+import { createValidator, cpf, required, cns } from '../../index'
 
 const validator = createValidator({
     nome: required,
     teste: createValidator({
-        id: [required],
+        id: [required, cpf, [[cns]]],
     }),
 })

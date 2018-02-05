@@ -15,7 +15,10 @@ export * from './rules/senha'
 export * from './rules/telefone'
 
 export type RuleFunction = (value: any) => any
-export type Rule = RuleFunction | RuleFunction[]
+export interface RuleNestedArray {
+    [index: number]: RuleFunction | RuleNestedArray
+}
+export type Rule = RuleFunction | RuleNestedArray
 export type Rules = {[key in string]: Rule}
 export type ValidateFunction = (value: any, errors: any) => any
 
