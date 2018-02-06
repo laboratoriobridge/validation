@@ -26,7 +26,7 @@ export function createValidator(rules: Rules, validator?: ValidateFunction): Rul
     return (value: any): any => {
         const errors = {}
         Object.keys(rules).forEach((key) => {
-            const error = validate(value[key], rules[key])
+            const error = validate(value && value[key], rules[key])
             if (error) {
                 errors[key] = error
             }
@@ -41,7 +41,7 @@ export function createValidator(rules: Rules, validator?: ValidateFunction): Rul
 }
 
 export function validate(value: any, rule: Rule): any {
-    const ruleArray = [].concat.apply([], [].concat(rule))
+    const ruleArray = [].concat.apply([], [].concat(rule)).filter(r => typeof r === 'function')
     const joinedRules = join(ruleArray) // concat enables both functions and arrays of functions
     return joinedRules(value)
 }
