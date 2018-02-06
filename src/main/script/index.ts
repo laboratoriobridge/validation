@@ -26,7 +26,7 @@ export function createValidator(rules: Rules, validator?: ValidateFunction): Rul
     return (value: any): any => {
         const errors = {}
         Object.keys(rules).forEach((key) => {
-            const error = validate(value[key], rules[key])
+            const error = validate(value && value[key], rules[key])
             if (error) {
                 errors[key] = error
             }
