@@ -30,7 +30,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	@Deprecated
 	@Override
 	public void fieldError(String campo, String mensagem) {
-		this.fieldError(campo, mensagem);
+		this.put(campo, mensagem);
 	}
 
 	@Override

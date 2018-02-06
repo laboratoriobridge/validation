@@ -33,6 +33,28 @@ public class FormErrorTest {
 		Assert.assertTrue(errors.isValid());
 	}
 
+	@Test
+	public void invalido() {
+		Form form = new Form();
+
+		FormError errors = new FormErrorImpl(form);
+
+		errors.cep(meta.cep);
+		errors.cnpj(meta.cnpj);
+		errors.cns(meta.cns);
+		errors.cpf(meta.cpf);
+		errors.dataNasc(meta.dataNascimento);
+		errors.duracao(meta.duracao);
+		errors.email(meta.email);
+		errors.hora(meta.hora);
+		errors.dataMax(meta.maxDate);
+		errors.nome(meta.nome);
+		errors.required(meta.required);
+		errors.telefone(meta.telefone);
+
+		Assert.assertFalse(errors.isValid());
+	}
+
 	@Metafy
 	public static class Form {
 		private String cep;
