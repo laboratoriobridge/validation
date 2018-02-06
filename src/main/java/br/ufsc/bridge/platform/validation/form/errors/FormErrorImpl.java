@@ -13,7 +13,7 @@ import br.ufsc.bridge.platform.validation.engine.Validation;
 import br.ufsc.bridge.platform.validation.rules.Rules;
 import br.ufsc.bridge.platform.validation.util.Reflections;
 
-public class FormErrorImpl extends HashMap<String, ValidationError> implements FormError {
+public class FormErrorImpl extends HashMap<String, Object> implements FormError {
 
 	private static final long serialVersionUID = -6446758048046334551L;
 
@@ -30,26 +30,12 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	@Deprecated
 	@Override
 	public void fieldError(String campo, String mensagem) {
-		this.fieldError(campo, new FieldError(mensagem));
+		this.fieldError(campo, mensagem);
 	}
 
 	@Override
 	public void fieldError(MetaField<?> field, String mensagem) {
-		this.fieldError(field.getAlias(), new FieldError(mensagem));
-	}
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	@Override
-	public void fieldError(String campo, FieldError error) {
-		this.put(campo, error);
-	}
-
-	@Override
-	public void fieldError(MetaField<?> field, FieldError error) {
-		this.fieldError(field.getAlias(), error);
+		this.fieldError(field.getAlias(), mensagem);
 	}
 
 	@Override
@@ -75,11 +61,11 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	@Override
 	public boolean fieldIsValid(MetaField<?> field) {
 		boolean valid = true;
-		ValidationError error = this.get(field.getAlias());
-		if (error != null && error instanceof FieldError) {
+		Object error = this.get(field.getAlias());
+		if (error != null && error instanceof String) {
 			valid = false;
-		} else if (error != null && error instanceof FormError) {
-			valid = ((FormErrorImpl) error).isValid();
+		} else if (error != null && error instanceof ValidationError) {
+			valid = ((ValidationError) error).isValid();
 		}
 		return valid;
 	}
@@ -88,17 +74,11 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 	public boolean isValid() {
 		boolean valid = true;
 
-		Iterator<ValidationError> iterator = this.values().iterator();
+		Iterator<Object> iterator = this.values().iterator();
 		while (iterator.hasNext()) {
-			ValidationError validationError = iterator.next();
-			if (validationError instanceof FormErrorImpl) {
-				boolean childFormValid = ((FormErrorImpl) validationError).isValid();
-				valid = valid && childFormValid;
-				if (childFormValid) {
-					iterator.remove();
-				}
-			} else if (validationError instanceof ListErrorImpl) {
-				boolean childFormValid = ((ListErrorImpl) validationError).isValid();
+			Object validationError = iterator.next();
+			if (validationError instanceof ValidationError) {
+				boolean childFormValid = ((ValidationError) validationError).isValid();
 				valid = valid && childFormValid;
 				if (childFormValid) {
 					iterator.remove();
@@ -113,7 +93,7 @@ public class FormErrorImpl extends HashMap<String, ValidationError> implements F
 
 	private <F> void runRule(MetaField<F> field, Rule rule) {
 		if (this.fieldIsValid(field)) {
-			FieldError result;
+			String result;
 			if (this.target != null) {
 				result = Validation.get().validate(Reflections.getValue(this.target, field.getAlias()), rule);
 			} else {

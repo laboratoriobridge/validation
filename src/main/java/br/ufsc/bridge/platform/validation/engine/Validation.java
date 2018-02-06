@@ -1,7 +1,5 @@
 package br.ufsc.bridge.platform.validation.engine;
 
-import br.ufsc.bridge.platform.validation.form.errors.FieldError;
-
 public class Validation {
 
 	private static Validation instance;
@@ -19,12 +17,8 @@ public class Validation {
 		return instance;
 	}
 
-	public FieldError validate(Object value, Rule rule) {
-		String errorMessage = (String) this.engine.serverValidate(value, rule);
-		if (errorMessage != null) {
-			return new FieldError(errorMessage);
-		}
-		return null;
+	public String validate(Object value, Rule rule) {
+		return (String) this.engine.serverValidate(value, rule);
 	}
 
 }

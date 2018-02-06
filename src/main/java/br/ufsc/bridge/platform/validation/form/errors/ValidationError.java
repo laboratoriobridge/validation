@@ -4,4 +4,6 @@ import java.io.Serializable;
 
 public interface ValidationError extends Serializable {
 
+	boolean isValid();
+
 }

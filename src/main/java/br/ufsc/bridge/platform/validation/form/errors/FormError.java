@@ -7,6 +7,7 @@ import br.ufsc.bridge.metafy.MetaList;
 
 public interface FormError extends ValidationError {
 
+	@Override
 	boolean isValid();
 
 	boolean fieldIsValid(MetaField<?> field);
@@ -20,12 +21,7 @@ public interface FormError extends ValidationError {
 	/**
 	 * Usar o equivalente com MetaField.
 	 */
-	@Deprecated
-	void fieldError(String campo, FieldError error);
-
 	void fieldError(MetaField<?> field, String mensagem);
-
-	void fieldError(MetaField<?> field, FieldError error);
 
 	FormError formError(MetaField<?> field);
 
