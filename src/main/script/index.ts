@@ -36,13 +36,13 @@ export function createValidator(rules: Rules, validator?: ValidateFunction): Rul
             Object.assign(errors, validator(value, errors))
         }
 
-        return errors
+        return Object.keys(errors).length > 0 ? errors : undefined;
     }
 }
 
 export function validate(value: any, rule: Rule): any {
     const ruleArray = [].concat.apply([], [].concat(rule)).filter(r => typeof r === 'function')
-    const joinedRules = join(ruleArray) // concat enables both functions and arrays of functions
+    const joinedRules = join(ruleArray)
     return joinedRules(value)
 }
 
