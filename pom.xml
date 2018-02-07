@@ -13,8 +13,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Frontend -->
-		<node.version>v7.5.0</node.version>
-		<npm.version>4.1.2</npm.version>
+		<node.version>v8.9.4</node.version>
+		<yarn.version>v1.3.2</yarn.version>
 	</properties>
 
 	<dependencies>
@@ -58,20 +58,20 @@
 				<artifactId>frontend-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>install node and npm</id>
+						<id>install node and yarn</id>
 						<goals>
-							<goal>install-node-and-npm</goal>
+							<goal>install-node-and-yarn</goal>
 						</goals>
 						<configuration>
 							<nodeVersion>${node.version}</nodeVersion>
-							<npmVersion>${npm.version}</npmVersion>
+							<yarnVersion>${yarn.version}</yarnVersion>
 						</configuration>
 					</execution>
 
 					<execution>
-						<id>npm install</id>
+						<id>yarn install</id>
 						<goals>
-							<goal>npm</goal>
+							<goal>yarn</goal>
 						</goals>
 						<configuration>
 							<arguments>install</arguments>
@@ -79,9 +79,9 @@
 					</execution>
 
 					<execution>
-						<id>npm build</id>
+						<id>yarn build</id>
 						<goals>
-							<goal>npm</goal>
+							<goal>yarn</goal>
 						</goals>
 						<configuration>
 							<arguments>run build</arguments>
@@ -89,24 +89,24 @@
 					</execution>
 					
 					<execution>
-						<id>npm-version</id>
+						<id>yarn-version</id>
 						<phase>none</phase>
 						<goals>
-							<goal>npm</goal>
+							<goal>yarn</goal>
 						</goals>
 						<configuration>
-							<arguments>version ${project.version} --no-git-tag-version</arguments>
+							<arguments>version --new-version ${project.version} --no-git-tag-version</arguments>
 						</configuration>
 					</execution>
 
 					<execution>
-						<id>npm publish</id>
+						<id>yarn publish</id>
 						<phase>deploy</phase>
 						<goals>
-							<goal>npm</goal>
+							<goal>yarn</goal>
 						</goals>
 						<configuration>
-							<arguments>publish</arguments>
+							<arguments>publish --new-version ${project.version}</arguments>
 						</configuration>
 					</execution>
 
@@ -127,10 +127,10 @@
 					<tagNameFormat>@{project.version}</tagNameFormat>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<preparationGoals>
-						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
+						frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
 					</preparationGoals>
 					<completionGoals>
-						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration'
+						frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration'
 					</completionGoals>
 				</configuration>
 			</plugin>
