@@ -87,6 +87,17 @@
 							<arguments>run build</arguments>
 						</configuration>
 					</execution>
+					
+					<execution>
+						<id>npm-version</id>
+						<phase>none</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>version ${project.version} --no-git-tag-version</arguments>
+						</configuration>
+					</execution>
 
 					<execution>
 						<id>npm publish</id>
@@ -115,6 +126,12 @@
 				<configuration>
 					<tagNameFormat>@{project.version}</tagNameFormat>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<preparationGoals>
+						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
+					</preparationGoals>
+					<completionGoals>
+						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration' -DpushChanges=false
+					</completionGoals>
 				</configuration>
 			</plugin>
 		</plugins>
