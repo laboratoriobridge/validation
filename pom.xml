@@ -130,7 +130,7 @@
 						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
 					</preparationGoals>
 					<completionGoals>
-						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration' -DpushChanges=false
+						frontend:npm@npm-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration'
 					</completionGoals>
 				</configuration>
 			</plugin>
