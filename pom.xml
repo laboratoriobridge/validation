@@ -98,18 +98,6 @@
 							<arguments>version --new-version ${project.version} --no-git-tag-version</arguments>
 						</configuration>
 					</execution>
-
-					<execution>
-						<id>yarn publish</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>publish --new-version ${project.version}</arguments>
-						</configuration>
-					</execution>
-
 				</executions>
 			</plugin>
 			<plugin>
@@ -134,6 +122,21 @@
 					</completionGoals>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                      <id>npm-publish</id>
+                      <phase>deploy</phase>
+                      <executable>npm</executable>
+                      <arguments>
+                        <argument>publish</argument>
+                      </arguments>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 		<resources>
 			<resource>
