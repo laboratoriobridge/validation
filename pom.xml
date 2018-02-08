@@ -1,168 +1,175 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.ufsc.bridge</groupId>
-	<artifactId>validation</artifactId>
-	<version>1.0.10-SNAPSHOT</version>
-	<name>Bridge Platform - Validation</name>
+  <groupId>br.ufsc.bridge</groupId>
+  <artifactId>validation</artifactId>
+  <version>1.0.10-SNAPSHOT</version>
+  <name>Bridge Platform - Validation</name>
 
-	<properties>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
+  <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<!-- Frontend -->
-		<node.version>v8.9.4</node.version>
-		<yarn.version>v1.3.2</yarn.version>
-	</properties>
+    <!-- Frontend -->
+    <node.version>v8.9.4</node.version>
+    <npm.version>v5.6.0</npm.version>
+    <yarn.version>v1.3.2</yarn.version>
+  </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.ufsc.bridge</groupId>
-			<artifactId>metafy</artifactId>
-			<version>0.0.10</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.2.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>2.2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.8.3</version>
-		</dependency>
-		<dependency>
-        	<groupId>joda-time</groupId>
-        	<artifactId>joda-time</artifactId>
-        	<version>2.7</version>
-      	</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>br.ufsc.bridge</groupId>
+      <artifactId>metafy</artifactId>
+      <version>0.0.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>5.2.2.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>javax.el-api</artifactId>
+      <version>2.2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.8.3</version>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.7</version>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>install node and yarn</id>
-						<goals>
-							<goal>install-node-and-yarn</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>${node.version}</nodeVersion>
-							<yarnVersion>${yarn.version}</yarnVersion>
-						</configuration>
-					</execution>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>install node and yarn</id>
+            <goals>
+              <goal>install-node-and-yarn</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>${node.version}</nodeVersion>
+              <yarnVersion>${yarn.version}</yarnVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>${node.version}</nodeVersion>
+              <yarnVersion>${npm.version}</yarnVersion>
+            </configuration>
+          </execution>
+          
 
-					<execution>
-						<id>yarn install</id>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
+          <execution>
+            <id>yarn install</id>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
 
-					<execution>
-						<id>yarn build</id>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>yarn-version</id>
-						<phase>none</phase>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>version --new-version ${project.version} --no-git-tag-version</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
+          <execution>
+            <id>yarn build</id>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
 
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-			</plugin>
-			 <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.2</version>
-				<configuration>
-					<tagNameFormat>@{project.version}</tagNameFormat>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<preparationGoals>
-						frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
-					</preparationGoals>
-					<completionGoals>
-						frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration'
-					</completionGoals>
-				</configuration>
-			</plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                      <id>npm-publish</id>
-                      <phase>deploy</phase>
-                      <configuration>
-                        <executable>npm</executable>
-                        <arguments>
-                          <argument>publish</argument>
-                        </arguments>
-                      </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-		</plugins>
-		<resources>
-			<resource>
-				<directory>_bundles/</directory>
-			</resource>
-		</resources>
-	</build>
+          <execution>
+            <id>yarn-version</id>
+            <phase>none</phase>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <configuration>
+              <arguments>version --new-version ${project.version} --no-git-tag-version</arguments>
+            </configuration>
+          </execution>
 
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>Internal Releases</name>
-			<url>http://nexus.bridge.ufsc.br/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>http://nexus.bridge.ufsc.br/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+          <execution>
+            <id>npm publish</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>publish</arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
 
-	<scm>
-		<connection>scm:git:git@github.com:laboratoriobridge/validation.git</connection>
-		<url>scm:git:git@github.com:laboratoriobridge/validation.git</url>
-		<developerConnection>scm:git:git@github.com:laboratoriobridge/validation.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <preparationGoals>
+            frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
+          </preparationGoals>
+          <completionGoals>
+            frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration'
+          </completionGoals>
+        </configuration>
+      </plugin>
+    </plugins>
+    <resources>
+      <resource>
+        <directory>_bundles/</directory>
+      </resource>
+    </resources>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>releases</id>
+      <name>Internal Releases</name>
+      <url>http://nexus.bridge.ufsc.br/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <url>http://nexus.bridge.ufsc.br/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <scm>
+    <connection>scm:git:git@github.com:laboratoriobridge/validation.git</connection>
+    <url>scm:git:git@github.com:laboratoriobridge/validation.git</url>
+    <developerConnection>scm:git:git@github.com:laboratoriobridge/validation.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 </project>
