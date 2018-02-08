@@ -130,10 +130,12 @@
                     <execution>
                       <id>npm-publish</id>
                       <phase>deploy</phase>
-                      <executable>npm</executable>
-                      <arguments>
-                        <argument>publish</argument>
-                      </arguments>
+                      <configuration>
+                        <executable>npm</executable>
+                        <arguments>
+                          <argument>publish</argument>
+                        </arguments>
+                      </configuration>
                     </execution>
                 </executions>
             </plugin>
