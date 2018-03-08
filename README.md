@@ -1,5 +1,6 @@
 # Validation
 
-Validadores compartilhados entre o server e o client (validation.js).
+Shared rules between Server (Java) and Client (bridge-validation.js).
 
-As regras de validação e validadores são definidos no javascript e utilizados no Java via Nashorn, para evitar duplicação das regras de validação no cliente e no servidor.
+The core rules are only defined in JavaScript. 
+In the Server (Java) they are executed via Nashorn, to avoid duplication.
