@@ -13,8 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Frontend -->
-    <node.version>v8.9.4</node.version>
-    <npm.version>v5.6.0</npm.version>
+    <node.version>v8.9.4</node.version>    
     <yarn.version>v1.3.2</yarn.version>
   </properties>
 
