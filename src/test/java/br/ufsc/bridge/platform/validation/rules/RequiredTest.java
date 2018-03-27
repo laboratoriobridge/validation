@@ -25,7 +25,7 @@ public class RequiredTest extends ValidationTest {
 
 		List<String> list = new ArrayList<>();
 		list.add("1");
-		Assert.assertNull("List com items é valido", this.validate(list, Rules.required));
+		Assert.assertNull("List com items é válido", this.validate(list, Rules.required));
 	}
 
 }

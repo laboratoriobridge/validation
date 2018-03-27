@@ -45,6 +45,8 @@ public interface FormError extends ValidationError {
 
 	void email(MetaField<String> field);
 
+	void empty(MetaField<?> field);
+
 	void hora(MetaField<String> field);
 
 	void length(MetaField<String> field, Number length);
