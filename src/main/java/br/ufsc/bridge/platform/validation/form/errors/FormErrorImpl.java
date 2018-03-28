@@ -182,6 +182,11 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	}
 
 	@Override
+	public void empty(MetaField<?> field) {
+		this.runRule(field, Rules.empty);
+	}
+
+	@Override
 	public void hora(MetaField<String> field) {
 		this.runRule(field, Rules.hora);
 	}

@@ -5,6 +5,7 @@ export * from './rules/cns'
 export * from './rules/cpf'
 export * from './rules/data'
 export * from './rules/email'
+export * from './rules/empty'
 export * from './rules/hora'
 export * from './rules/length'
 export * from './rules/match'
@@ -36,7 +37,7 @@ export function createValidator(rules: Rules, validator?: ValidateFunction): Rul
             Object.assign(errors, validator(value, errors))
         }
 
-        return Object.keys(errors).length > 0 ? errors : undefined;
+        return Object.keys(errors).length > 0 ? errors : undefined
     }
 }
 
