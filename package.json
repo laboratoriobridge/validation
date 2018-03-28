@@ -1,13 +1,13 @@
 {
   "name": "bridge-validation",
-  "version": "1.0.11-SNAPSHOT",
+  "version": "1.0.14-SNAPSHOT",
   "description": "Shared validators for server and client",
   "main": "lib/index.js",
   "types": "lib/index",
   "author": "Bridge",
   "license": "ISC",
   "publishConfig": {
-    "registry": "http://nexus.bridge.ufsc.br/content/repositories/npm-private/"
+    "registry": "https://repositorio.bridge.ufsc.br/repository/npm-private/"
   },
   "scripts": {
     "clean": "shx rm -rf _bundles lib",
