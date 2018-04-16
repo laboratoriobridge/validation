@@ -1,8 +1,8 @@
-import { clearErrorObject, createValidator, maxLength, msg, required, validate } from '../'
+import { clearErrorObject, createValidator, ErrorObject, maxLength, msg, required, validate } from '../'
 
 describe('createValidator', () => {
     it('should create a function that returns an error object containing messages for the invalid attributes', () => {
-        const validator = createValidator({
+        const validator = createValidator<any>({
             foo: required,
             bar: [[required], maxLength(1)],
             baz: createValidator({
@@ -17,17 +17,17 @@ describe('createValidator', () => {
         expect(errors.foo).toBeTruthy()
         expect(errors.bar).toBeTruthy()
         expect(errors.baz).toBeTruthy()
-        expect(errors.baz.biz).toBeTruthy()
+        expect((errors.baz as any).biz).toBeTruthy()
         expect(errors.valid1).not.toBeTruthy()
         expect(errors.valid2).not.toBeTruthy()
         expect(errors.lala).not.toBeTruthy()
     })
 
     it('should accept a second all value validation function', () => {
-        const validator = createValidator({
+        const validator = createValidator<any>({
             foo: required,
         }, (allValues, propertiesErrors: any) => {
-            const errors = {} as any
+            const errors: ErrorObject<any> = {}
             if (!allValues.bar) {
                 errors.bar = 'Wrong'
             }
@@ -56,6 +56,39 @@ describe('createValidator', () => {
         expect(validator({ foo: '1', bar: { baz: '2' } })).toBeUndefined()
         expect(validator({ bar: { baz: '2' } })).toEqual({ foo: msg('required', null) })
         expect(validator({ foo: '1', bar: {} })).toEqual({ bar: { baz: msg('required', null) } })
+    })
+
+    it('should create a validator bound to DataType', () => {
+        interface DataType {
+            id: number
+            name: string
+            address: {
+                street: string
+                city: { id: number, name: string }
+            }
+        }
+
+        const errors: ErrorObject<DataType> = {
+            id: 'id error',
+            name: 'name error',
+            address: {
+                street: 'address.street error',
+                city: {
+                    id: 'address.city.id error',
+                    name: 'address.city.name error',
+                },
+            },
+        }
+
+        const validator = createValidator<DataType>({
+            id: [],
+            name: [],
+            address: createValidator({
+                street: [],
+            }),
+        })
+
+        const errors2 = validator({})
     })
 })
 
