@@ -1,3 +1,4 @@
+import { msg } from '..'
 import * as Util from '../Util'
 
 const TELEFONE = '^\\d{2}9?\\d{8}$'
@@ -14,6 +15,6 @@ function numeroDoTelefoneTemTodosDigitosIguais(telefoneValue: string) {
 
 export function telefone(value: string) {
     if (!Util.isEmpty(value) && (numeroDoTelefoneTemTodosDigitosIguais(value) || !new RegExp(TELEFONE).test(value))) {
-        return 'O telefone informado é inválido'
+        return msg('telefone', value)
     }
 }

@@ -1,0 +1,25 @@
+import { ValidationMessages } from '../'
+
+export const messages: ValidationMessages = {
+    cep: (value, ...args) => ``,
+    cnpj: (value, ...args) => ``,
+    cns: (value, ...args) => ``,
+    cpf: (value, ...args) => ``,
+    dataNasc: (value, ...args) => ``,
+    maxDate: (value, ...args) => ``,
+    duracao: (value, ...args) => ``,
+    email: (value, ...args) => ``,
+    empty: (value, ...args) => ``,
+    hora: (value, ...args) => ``,
+    length: (value, ...args) => ``,
+    minLength: (value, ...args) => ``,
+    maxLength: (value, ...args) => ``,
+    match: (value, ...args) => ``,
+    nome: (value, ...args) => ``,
+    range: (value, ...args) => ``,
+    minRange: (value, ...args) => ``,
+    maxRange: (value, ...args) => ``,
+    required: (value, ...args) => `Required`,
+    senha: (value, ...args) => ``,
+    telefone: (value, ...args) => ``,
+}

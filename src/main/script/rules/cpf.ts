@@ -1,10 +1,12 @@
+import { msg } from '..'
+
 import { length } from './length'
 
 const CPF = '^[0-9]{11}$'
 
 function cpfRule(value: string) {
     if (!isValid(value)) {
-        return 'O CPF informado é inválido'
+        return msg('cpf', value)
     }
 }
 

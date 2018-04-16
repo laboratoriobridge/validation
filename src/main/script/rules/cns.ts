@@ -1,3 +1,5 @@
+import { msg } from '..'
+
 import { length } from './length'
 
 const CNS1 = '^[1-2][0-9]{10}00[0-1][0-9]$'
@@ -13,7 +15,7 @@ function somaPonderada(cnsValue: string) {
 
 function cnsRule(cnsValue: string) {
     if (!isValid(cnsValue)) {
-        return 'O CNS informado é inválido'
+        return msg('cns', cnsValue)
     }
 }
 
