@@ -1,4 +1,4 @@
-import { createValidator, maxLength, required, validate } from '../'
+import { clearErrorObject, createValidator, maxLength, msg, required, validate } from '../'
 
 describe('createValidator', () => {
     it('should create a function that returns an error object containing messages for the invalid attributes', () => {
@@ -44,6 +44,19 @@ describe('createValidator', () => {
 
         expect(validator({ foo: 1, bar: 2 })).toBeUndefined()
     })
+
+    it('should clear out recursively property falsy property errors', () => {
+        const validator = createValidator({}, (values) => {
+            const errors = {} as any
+            errors.foo = required(values.foo)
+            errors.bar = { baz: required(values.bar.baz) }
+            return errors
+        })
+
+        expect(validator({ foo: '1', bar: { baz: '2' } })).toBeUndefined()
+        expect(validator({ bar: { baz: '2' } })).toEqual({ foo: msg('required', null) })
+        expect(validator({ foo: '1', bar: {} })).toEqual({ bar: { baz: msg('required', null) } })
+    })
 })
 
 describe('validate', () => {
@@ -54,5 +67,20 @@ describe('validate', () => {
         expect(validate('', required)).toBeTruthy()
         expect(validate('', [required])).toBeTruthy()
         expect(validate('', [[required]])).toBeTruthy()
+    })
+})
+
+describe('clearOut', () => {
+    it('should recursively clean falsy object properties', () => {
+        const obj = {
+            foo: 'Wrong',
+            bar: undefined,
+            baz: null,
+            qux: false,
+            biz: '',
+            nest: { top: 1, not: false },
+            notNest: { deep: '' },
+        }
+        expect(clearErrorObject(obj)).toEqual({ foo: 'Wrong', nest: { top: 1 } })
     })
 })

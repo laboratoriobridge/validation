@@ -21,7 +21,7 @@ export function createValidator(rules: RuleMap, validator?: ValidateFunction): V
             Object.assign(errors, validator(allValues, errors))
         }
 
-        return Object.keys(errors).length > 0 ? errors : undefined
+        return clearErrorObject(errors)
     }
 }
 
@@ -33,3 +33,22 @@ export function validate(value: any, rule: RuleDefinition): any {
 
 const composeRules = (rules: RuleFunction[]) => (value) =>
     rules.map(rule => rule(value)).filter(error => !!error)[0 /* retorna apenas o primero erro */]
+
+export const clearErrorObject = (obj) => {
+    const cleaned = Object.keys(obj)
+        .filter(k => !!obj[k])
+        .reduce((newObj, k) => {
+            if (typeof obj[k] === 'object') {
+                const nestedObj = clearErrorObject(obj[k])
+                return nestedObj ? { ...newObj, [k]: nestedObj } : newObj
+            } else {
+                return { ...newObj, [k]: obj[k] }
+            }
+        }, {})
+
+    if (Object.keys(cleaned).length === 0) {
+        return undefined
+    }
+
+    return cleaned
+}
