@@ -1,15 +1,20 @@
-export type ValidatorFunction = (allValues: object) => any
+export type ValidatorFunction<DataType> = (allValues: Partial<DataType>) => ErrorObject<DataType>
 export type RuleFunction = (value: any) => any
 export interface RuleNestedArray {
     [index: number]: RuleFunction | RuleNestedArray
 }
 export type RuleDefinition = RuleFunction | RuleNestedArray
-export type RuleMap = { [key in string]: RuleDefinition }
-export type ValidateFunction = (value: any, propertiesErrors: object) => object
+export type RuleMap<DataType> = { [key in keyof Partial<DataType>]: RuleDefinition }
+export type ErrorObject<DataType> = {
+    [K in keyof DataType]?: ErrorObject<DataType[K]> | string
+}
+export type ValidateFunction<DataType> = (value: DataType, errors: ErrorObject<DataType>) => ErrorObject<DataType>
 
-export function createValidator(rules: RuleMap, validator?: ValidateFunction): ValidatorFunction {
-    return (allValues: object): any => {
-        const errors = {}
+export function createValidator<DataType = any>(rules: RuleMap<DataType>, validator?: ValidateFunction<DataType>):
+    ValidatorFunction<DataType> {
+    return (allValues: DataType): ErrorObject<DataType> => {
+        const errors: ErrorObject<DataType> = {}
+
         Object.keys(rules).forEach((key) => {
             const error = validate(allValues && allValues[key], rules[key])
             if (error) {
@@ -21,7 +26,7 @@ export function createValidator(rules: RuleMap, validator?: ValidateFunction): V
             Object.assign(errors, validator(allValues, errors))
         }
 
-        return Object.keys(errors).length > 0 ? errors : undefined
+        return clearErrorObject(errors)
     }
 }
 
@@ -32,4 +37,23 @@ export function validate(value: any, rule: RuleDefinition): any {
 }
 
 const composeRules = (rules: RuleFunction[]) => (value) =>
-    rules.map(rule => rule(value)).filter(error => !!error)[0 /* retorna apenas o primero erro */]
+    rules.map(rule => rule(value)).filter(error => !!error)[0 /* returns first error only */]
+
+export const clearErrorObject = <T>(errors: ErrorObject<T>): ErrorObject<T> | undefined => {
+    const cleaned = Object.keys(errors)
+        .filter(k => !!errors[k])
+        .reduce((newObj, k) => {
+            if (typeof errors[k] === 'object') {
+                const nestedObj = clearErrorObject(errors[k])
+                return nestedObj ? { ...newObj, [k]: nestedObj } : newObj
+            } else {
+                return { ...newObj, [k]: errors[k] }
+            }
+        }, {})
+
+    if (Object.keys(cleaned).length === 0) {
+        return undefined
+    }
+
+    return cleaned
+}
