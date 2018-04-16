@@ -1,8 +1,10 @@
+import { msg } from '..'
+
 import { length } from './length'
 
 function cnpjRule(value: string) {
     if (!isValid(value)) {
-        return 'O CNPJ informado é inválido'
+        return msg('cnpj', value)
     }
 }
 

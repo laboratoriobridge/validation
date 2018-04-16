@@ -1,0 +1,25 @@
+import { ValidationMessages } from '../'
+
+export const messages: ValidationMessages = {
+    cep: (value, ...args) => `O CEP informado é inválido`,
+    cnpj: (value, ...args) => `O CNPJ informado é inválido`,
+    cns: (value, ...args) => `O CNS informado é inválido`,
+    cpf: (value, ...args) => `O CPF informado é inválido`,
+    dataNasc: (value, ...args) => `A idade máxima permitida é 130 anos`,
+    maxDate: (value, ...args) => `A data não pode ser superior à data atual`,
+    duracao: (value, ...args) => `A duração informada é inválida`,
+    email: (value, ...args) => `O e-mail informado é inválido`,
+    empty: (value, ...args) => `Esse campo não deve ser preenchido`,
+    hora: (value, ...args) => `O horário informado é inválido`,
+    length: (value, ...args) => `O campo deve possuir ${args[0]} caracteres`,
+    minLength: (value, ...args) => `O campo deve possuir ao menos ${args[0]} caracteres`,
+    maxLength: (value, ...args) => `O campo deve possuir menos que ${args[0]} caracteres`,
+    match: (value, ...args) => `Um ou mais caracteres informados não são permitidos para esse campo`,
+    nome: (value, ...args) => `Informe nome e sobrenome`,
+    range: (value, ...args) => `O campo deve ter valor entre ${args[0]} e ${args[1]}`,
+    minRange: (value, ...args) => `O valor inserido deve ser maior ou igual a ${args[0]}`,
+    maxRange: (value, ...args) => `O valor inserido deve ser menor ou igual a ${args[0]}`,
+    required: (value, ...args) => `Esse campo é de preenchimento obrigatório`,
+    senha: (value, ...args) => `A senha deve possuir ao menos uma letra e um número`,
+    telefone: (value, ...args) => `O telefone informado é inválido`,
+}

@@ -15,4 +15,5 @@ export * from './rules/required'
 export * from './rules/senha'
 export * from './rules/telefone'
 
+export * from './messages'
 export * from './validator'

@@ -1,16 +1,17 @@
 import * as moment from 'moment'
 
+import { msg } from '..'
 import * as Util from '../Util'
 
 export const SERVER_FORMAT = 'YYYY-MM-DD'
 
-function minDateFunction(value: string) {
+function dataNascRule(value: string) {
     if (!Util.isEmpty(value)) {
         const today = moment().toDate()
         const minDate = new Date(today.getFullYear() - 130, today.getMonth(), today.getDate())
         const minDateFormatted = asFormat(minDate)
         if (minDateFormatted > value) {
-            return 'A idade máxima permitida é 130 anos'
+            return msg('dataNasc', value)
         }
     }
 }
@@ -19,7 +20,7 @@ function maxDateFunction(value: string) {
     if (!Util.isEmpty(value)) {
         const maxDateFormatted = asFormat(moment().toDate())
         if (maxDateFormatted < value) {
-            return 'A data não pode ser superior à data atual'
+            return msg('maxDate', value)
         }
     }
 }
@@ -29,7 +30,7 @@ function asFormat(value) {
 }
 
 export const dataNasc = [
-    minDateFunction,
+    dataNascRule,
     maxDateFunction,
 ]
 
