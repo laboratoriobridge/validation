@@ -3,6 +3,7 @@ package br.ufsc.bridge.platform.validation.form.errors;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import org.joda.time.LocalDate;
 
@@ -38,11 +39,15 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 		this.fieldError(field.getAlias(), mensagem);
 	}
 
+	protected Object getFieldValue(MetaField<?> field) {
+		return Reflections.getValue(this.target, field.getAlias());
+	}
+
 	@Override
 	public FormError formError(MetaField<?> field) {
 		FormError error = (FormError) this.get(field.getAlias());
 		if (error == null) {
-			error = new FormErrorImpl(Reflections.getValue(this.target, field.getAlias()));
+			error = new FormErrorImpl(this.getFieldValue(field));
 			this.put(field.getAlias(), error);
 		}
 		return error;
@@ -52,7 +57,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	public ListError listError(MetaList<?> field) {
 		ListError error = (ListError) this.get(field.getAlias());
 		if (error == null) {
-			error = new ListErrorImpl((List<?>) Reflections.getValue(this.target, field.getAlias()));
+			error = new ListErrorImpl((List<?>) this.getFieldValue(field));
 			this.put(field.getAlias(), error);
 		}
 		return error;
@@ -244,6 +249,23 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	@Override
 	public void telefone(MetaField<String> field) {
 		this.runRule(field, Rules.telefone);
+	}
+
+	@Override
+	public <T> void validateList(MetaList<T> field, BiConsumer<T, FormError> itemValidator) {
+		@SuppressWarnings("unchecked")
+		List<T> list = (List<T>) this.getFieldValue(field);
+
+		if (list == null || list.isEmpty()) {
+			return;
+		}
+
+		ListError listErrors = this.listError(field);
+
+		for (int i = 0; i < list.size(); i++) {
+			T item = list.get(i);
+			itemValidator.accept(item, listErrors.itemError(i));
+		}
 	}
 
 }

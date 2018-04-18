@@ -1,5 +1,8 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,11 +12,16 @@ import br.ufsc.bridge.metafy.Metafy;
 public class FormErrorTest {
 
 	private static final MFormErrorTest_Form meta = MFormErrorTest_Form.meta;
+	private static final MFormErrorTest_SubForm submeta = MFormErrorTest_SubForm.meta;
 
 	@Test
 	public void geral() {
 		Form form = new Form();
 		form.setRequired("1");
+
+		SubForm subform = new SubForm();
+		subform.setNome("José");
+		form.setList(Arrays.asList(subform));
 
 		FormError errors = new FormErrorImpl(form);
 
@@ -29,6 +37,9 @@ public class FormErrorTest {
 		errors.nome(meta.nome);
 		errors.required(meta.required);
 		errors.telefone(meta.telefone);
+		errors.validateList(meta.list, (item, itemError) -> {
+			itemError.required(submeta.nome);
+		});
 
 		Assert.assertTrue(errors.isValid());
 	}
@@ -36,6 +47,7 @@ public class FormErrorTest {
 	@Test
 	public void invalido() {
 		Form form = new Form();
+		form.setList(Arrays.asList(new SubForm()));
 
 		FormError errors = new FormErrorImpl(form);
 
@@ -51,7 +63,11 @@ public class FormErrorTest {
 		errors.nome(meta.nome);
 		errors.required(meta.required);
 		errors.telefone(meta.telefone);
+		errors.validateList(meta.list, (item, itemError) -> {
+			itemError.required(submeta.nome);
+		});
 
+		Assert.assertFalse(errors.fieldIsValid(meta.list));
 		Assert.assertFalse(errors.isValid());
 	}
 
@@ -69,6 +85,7 @@ public class FormErrorTest {
 		private String nome;
 		private String required;
 		private String telefone;
+		private List<SubForm> list;
 
 		public String getCep() {
 			return this.cep;
@@ -166,5 +183,25 @@ public class FormErrorTest {
 			this.telefone = telefone;
 		}
 
+		public List<SubForm> getList() {
+			return this.list;
+		}
+
+		public void setList(List<SubForm> list) {
+			this.list = list;
+		}
+	}
+
+	@Metafy
+	public static class SubForm {
+		private String nome;
+
+		public String getNome() {
+			return this.nome;
+		}
+
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
 	}
 }

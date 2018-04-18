@@ -1,5 +1,7 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
+import java.util.function.BiConsumer;
+
 import org.joda.time.LocalDate;
 
 import br.ufsc.bridge.metafy.MetaField;
@@ -70,5 +72,7 @@ public interface FormError extends ValidationError {
 	void senha(MetaField<String> field);
 
 	void telefone(MetaField<String> field);
+
+	<T> void validateList(MetaList<T> field, BiConsumer<T, FormError> itemValidator);
 
 }
