@@ -1,6 +1,6 @@
 {
   "name": "bridge-validation",
-  "version": "1.2.0",
+  "version": "1.2.1-SNAPSHOT",
   "description": "Shared validators for server and client",
   "main": "lib/index.js",
   "types": "lib/index",
