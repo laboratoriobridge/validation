@@ -30,6 +30,31 @@ export function createValidator<DataType = any>(rules: RuleMap<DataType>, valida
     }
 }
 
+export function createListValidator<DataType = any>(itemValidator: ValidatorFunction<DataType>):
+    ValidatorFunction<DataType[]> {
+    return (itemList: DataType[]): ErrorObject<DataType[]> => {
+        const errors: Array<ErrorObject<DataType>> = []
+
+        if (!itemList) {
+            return null
+        }
+        let hasErrors = false
+
+        itemList.map((value, index) => {
+            errors[index] = itemValidator(value)
+            if (errors[index]) {
+                hasErrors = true
+            }
+        })
+
+        if (!hasErrors) {
+            return null
+        }
+
+        return errors
+    }
+}
+
 export function validate(value: any, rule: RuleDefinition): any {
     const ruleArray = [].concat.apply([], [].concat(rule)).filter(r => typeof r === 'function')
     const composedFunction = composeRules(ruleArray)
