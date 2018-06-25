@@ -1,5 +1,6 @@
-import { clearErrorObject, createValidator, ErrorObject, maxLength, msg, required, validate } from '../'
-import { createListValidator } from '../validator'
+import {
+    clearErrorObject, createListValidator, createValidator, ErrorObject, maxLength, msg, required, validate
+} from '../'
 
 describe('createValidator', () => {
     it('should create a function that returns an error object containing messages for the invalid attributes', () => {
@@ -152,6 +153,12 @@ describe('createListValidator', () => {
         const errors = listValidator(null)
 
         expect(errors).toBeNull()
+    })
+
+    it('should throw an error if object to be validated it is not an array', () => {
+        const item = { id: 1, foo: 'foo', bar: 'bar' }
+
+        expect(() => listValidator(item)).toThrow()
     })
 
     it('should return null if all validations pass', () => {

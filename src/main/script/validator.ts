@@ -33,11 +33,16 @@ export function createValidator<DataType = any>(rules: RuleMap<DataType>, valida
 export function createListValidator<DataType = any>(itemValidator: ValidatorFunction<DataType>):
     ValidatorFunction<DataType[]> {
     return (itemList: DataType[]): ErrorObject<DataType[]> => {
+
         const errors: Array<ErrorObject<DataType>> = []
 
         if (!itemList) {
             return null
         }
+        if (!Array.isArray(itemList)) {
+            throw new Error('Object to be validated must be an array!')
+        }
+
         let hasErrors = false
 
         itemList.map((value, index) => {
