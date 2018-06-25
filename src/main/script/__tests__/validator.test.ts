@@ -1,4 +1,6 @@
-import { clearErrorObject, createValidator, ErrorObject, maxLength, msg, required, validate } from '../'
+import {
+    clearErrorObject, createListValidator, createValidator, ErrorObject, maxLength, msg, required, validate
+} from '../'
 
 describe('createValidator', () => {
     it('should create a function that returns an error object containing messages for the invalid attributes', () => {
@@ -113,7 +115,61 @@ describe('clearOut', () => {
             biz: '',
             nest: { top: 1, not: false },
             notNest: { deep: '' },
+            arr: [],
         }
         expect(clearErrorObject(obj)).toEqual({ foo: 'Wrong', nest: { top: 1 } })
     })
+})
+
+interface CustomDataType {
+    id: number
+    foo: string
+    bar: string
+}
+const itemValidator = createValidator<CustomDataType>({
+    id: [required],
+    foo: [required],
+    bar: [required],
+})
+const listValidator = createListValidator(itemValidator)
+
+describe('createListValidator', () => {
+    it('should return a function that validates a list using specified ValidatorFunction', () => {
+        const items: CustomDataType[] = [
+            { id: 1, foo: 'foo', bar: 'bar' },
+            { id: 2, foo: null, bar: 'bar' },
+            { id: 3, foo: 'foo', bar: 'bar' },
+        ]
+
+        const errors = listValidator(items)
+
+        expect(errors).toHaveLength(3)
+        expect(errors[0]).toBeUndefined()
+        expect(errors[2]).toBeUndefined()
+        expect(errors[1]).toBeTruthy()
+    })
+
+    it('should handle null objects', () => {
+        const errors = listValidator(null)
+
+        expect(errors).toBeNull()
+    })
+
+    it('should throw an error if object to be validated it is not an array', () => {
+        const item = { id: 1, foo: 'foo', bar: 'bar' }
+
+        expect(() => listValidator(item)).toThrow()
+    })
+
+    it('should return null if all validations pass', () => {
+        const items: CustomDataType[] = [
+            { id: 1, foo: 'foo', bar: 'bar' },
+            { id: 2, foo: 'foo', bar: 'bar' },
+            { id: 3, foo: 'foo', bar: 'bar' },
+        ]
+        const errors = listValidator(items)
+
+        expect(errors).toBeNull()
+    })
+
 })
