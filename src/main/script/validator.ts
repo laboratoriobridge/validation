@@ -77,7 +77,10 @@ export const clearErrorObject = <T>(errors: ErrorObject<T>): ErrorObject<T> | un
     if (Array.isArray(errors)) {
         const arr = []
         Object.keys(errors).forEach(key => {
-            arr[key] = clearErrorObject(errors[key])
+            const result = clearErrorObject(errors[key])
+            if (result) {
+                arr[key] = result
+            }
         })
         return Object.keys(arr).length > 0 ? arr as any : undefined
     }

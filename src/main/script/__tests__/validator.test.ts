@@ -146,6 +146,10 @@ describe('clearErrorObject', () => {
         const cleaned = clearErrorObject(obj)
         expect(Array.isArray(cleaned)).toEqual(true)
         expect(cleaned['global']).toEqual('Global error')
+
+        const obj2 = []
+        obj2['global'] = undefined
+        expect(clearErrorObject(obj2)).toEqual(undefined)
     })
 })
 
