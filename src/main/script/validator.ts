@@ -70,14 +70,24 @@ const composeRules = (rules: RuleFunction[]) => (value) =>
     rules.map(rule => rule(value)).filter(error => !!error)[0 /* returns first error only */]
 
 export const clearErrorObject = <T>(errors: ErrorObject<T>): ErrorObject<T> | undefined => {
+    if (!errors || typeof errors !== 'object') {
+        return errors
+    }
+
     const cleaned = Object.keys(errors)
         .filter(k => !!errors[k])
         .reduce((newObj, k) => {
-            if (typeof errors[k] === 'object') {
+            if (Array.isArray(errors[k]) && errors[k].length > 0) {
+                const arr = []
+                Object.keys(errors[k]).forEach(key => {
+                    arr[key] = clearErrorObject(errors[k][key])
+                })
+                return { ...newObj, [k]: arr }
+            } else if (typeof errors[k] === 'object') {
                 const nestedObj = clearErrorObject(errors[k])
                 return nestedObj ? { ...newObj, [k]: nestedObj } : newObj
             } else {
-                return { ...newObj, [k]: errors[k] }
+                return { ...newObj, [k]: clearErrorObject(errors[k]) }
             }
         }, {})
 
