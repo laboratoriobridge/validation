@@ -105,7 +105,7 @@ describe('validate', () => {
     })
 })
 
-describe('clearOut', () => {
+describe('clearErrorObject', () => {
     it('should recursively clean falsy object properties', () => {
         const obj = {
             foo: 'Wrong',
@@ -118,6 +118,26 @@ describe('clearOut', () => {
             arr: [],
         }
         expect(clearErrorObject(obj)).toEqual({ foo: 'Wrong', nest: { top: 1 } })
+    })
+    it('should ignore primitive values', () => {
+        expect(clearErrorObject('string')).toEqual('string')
+        expect(clearErrorObject(2)).toEqual(2)
+        expect(clearErrorObject(null)).toEqual(null)
+        expect(clearErrorObject(undefined)).toEqual(undefined)
+    })
+    it('should preserve array objects', () => {
+        const obj = {
+            foo: 'bar',
+            baz: ['error1', 'error2'],
+        }
+        // tslint:disable no-string-literal
+        obj.baz['global'] = 'global error'
+
+        const cleaned = clearErrorObject(obj)
+        expect(Array.isArray(cleaned.baz)).toEqual(true)
+        expect(cleaned.baz[0]).toEqual('error1')
+        expect(cleaned.baz[1]).toEqual('error2')
+        expect(cleaned.baz['global']).toEqual('global error')
     })
 })
 
