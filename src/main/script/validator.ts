@@ -74,21 +74,18 @@ export const clearErrorObject = <T>(errors: ErrorObject<T>): ErrorObject<T> | un
         return errors
     }
 
+    if (Array.isArray(errors)) {
+        const arr = []
+        Object.keys(errors).forEach(key => {
+            arr[key] = clearErrorObject(errors[key])
+        })
+        return Object.keys(arr).length > 0 ? arr as any : undefined
+    }
+
     const cleaned = Object.keys(errors)
-        .filter(k => !!errors[k])
         .reduce((newObj, k) => {
-            if (Array.isArray(errors[k]) && errors[k].length > 0) {
-                const arr = []
-                Object.keys(errors[k]).forEach(key => {
-                    arr[key] = clearErrorObject(errors[k][key])
-                })
-                return { ...newObj, [k]: arr }
-            } else if (typeof errors[k] === 'object') {
-                const nestedObj = clearErrorObject(errors[k])
-                return nestedObj ? { ...newObj, [k]: nestedObj } : newObj
-            } else {
-                return { ...newObj, [k]: clearErrorObject(errors[k]) }
-            }
+            const nestedObj = clearErrorObject(errors[k])
+            return nestedObj ? { ...newObj, [k]: nestedObj } : newObj
         }, {})
 
     if (Object.keys(cleaned).length === 0) {

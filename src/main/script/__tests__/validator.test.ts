@@ -139,6 +139,14 @@ describe('clearErrorObject', () => {
         expect(cleaned.baz[1]).toEqual('error2')
         expect(cleaned.baz['global']).toEqual('global error')
     })
+    it('should preserve array objects containing only keys', () => {
+        const obj = []
+        obj['global'] = 'Global error'
+
+        const cleaned = clearErrorObject(obj)
+        expect(Array.isArray(cleaned)).toEqual(true)
+        expect(cleaned['global']).toEqual('Global error')
+    })
 })
 
 interface CustomDataType {
