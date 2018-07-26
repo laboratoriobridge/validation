@@ -31,7 +31,11 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	@Deprecated
 	@Override
 	public void fieldError(String campo, String mensagem) {
-		this.put(campo, mensagem);
+		if (mensagem != null) {
+			this.put(campo, mensagem);
+		} else {
+			this.remove(campo);
+		}
 	}
 
 	@Override
@@ -67,9 +71,9 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	public boolean fieldIsValid(MetaField<?> field) {
 		boolean valid = true;
 		Object error = this.get(field.getAlias());
-		if (error != null && error instanceof String) {
+		if (error instanceof String) {
 			valid = false;
-		} else if (error != null && error instanceof ValidationError) {
+		} else if (error instanceof ValidationError) {
 			valid = ((ValidationError) error).isValid();
 		}
 		return valid;
@@ -104,9 +108,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 			} else {
 				result = Validation.get().validate(null, rule);
 			}
-			if (result != null) {
-				this.fieldError(field, result);
-			}
+			this.fieldError(field, result);
 		}
 	}
 

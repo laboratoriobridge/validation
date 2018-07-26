@@ -71,6 +71,17 @@ public class FormErrorTest {
 		Assert.assertFalse(errors.isValid());
 	}
 
+	@Test
+	public void desconsiderarMensagensNulas() {
+		Form form = new Form();
+
+		FormError errors = new FormErrorImpl(form);
+
+		errors.fieldError(meta.cep, null);
+
+		Assert.assertTrue(errors.isValid());
+	}
+
 	@Metafy
 	public static class Form {
 		private String cep;
