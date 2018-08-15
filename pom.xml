@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>br.ufsc.bridge</groupId>
@@ -78,7 +79,7 @@
               <npmVersion>${npm.version}</npmVersion>
             </configuration>
           </execution>
-          
+
 
           <execution>
             <id>yarn install</id>
@@ -89,7 +90,7 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
-          
+
           <execution>
             <id>yarn test</id>
             <goals>
@@ -108,7 +109,7 @@
             <configuration>
               <arguments>run build</arguments>
             </configuration>
-          </execution>          
+          </execution>
 
           <execution>
             <id>yarn-version</id>
@@ -165,12 +166,12 @@
 
   <distributionManagement>
     <repository>
-      <id>releases</id>
+      <id>repo-bridge</id>
       <name>Internal Releases</name>
       <url>https://repositorio.bridge.ufsc.br/repository/releases/</url>
     </repository>
     <snapshotRepository>
-      <id>snapshots</id>
+      <id>repo-bridge</id>
       <url>https://repositorio.bridge.ufsc.br/repository/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
