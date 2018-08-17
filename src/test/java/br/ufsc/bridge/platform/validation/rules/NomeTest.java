@@ -24,4 +24,16 @@ public class NomeTest extends ValidationTest {
 
 	}
 
+	@Test
+	public void nomeSobrenomeDeveSerMaiorQue2Caracteres() {
+		Assert.assertNull("Nome assim é valido", this.validate("AAA BB", Rules.nome));
+
+		Assert.assertNull("Nome assim é valido", this.validate("AA BBB", Rules.nome));
+
+		Assert.assertNotNull("Nome assim é inválido", this.validate("AA BB", Rules.nome));
+
+		Assert.assertNull("Este nome é valido", this.validate("AA BB CCCC", Rules.nome));
+
+	}
+
 }
