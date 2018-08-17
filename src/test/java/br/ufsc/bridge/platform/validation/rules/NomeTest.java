@@ -32,6 +32,8 @@ public class NomeTest extends ValidationTest {
 
 		Assert.assertNotNull("Nome assim é inválido", this.validate("AA BB", Rules.nome));
 
+		Assert.assertNull("Este nome é valido", this.validate("AA BB CCCC", Rules.nome));
+
 	}
 
 }
