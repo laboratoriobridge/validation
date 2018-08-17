@@ -9,7 +9,7 @@ export function nomeRule(value: string) {
     }
 }
 function verificaNomeSobrenome(value: string) {
-    if (value && (value.split(' ')[0].length < 2 || value.split(' ')[1].length < 2)) {
+    if (value && (value.split(' ')[0].length <= 2 && value.split(' ')[1].length <= 2)) {
         return true
     }
     return false
