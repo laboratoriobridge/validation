@@ -1,15 +1,16 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class EmailRule implements Rule {
+public class EmailRule implements Rule<String> {
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("email");
+	private MatchRule match = new MatchRule("^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*(\\.[a-z]{2,})$");
+
+	@Override public String validate(String value) {
+		if (!Util.isEmpty(value) && !this.match.isValid(value)) {
+			return "E-mail informado é inválido";
+		}
+		return null;
 	}
-
 }

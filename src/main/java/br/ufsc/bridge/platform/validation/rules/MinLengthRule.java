@@ -1,21 +1,21 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MinLengthRule implements Rule {
+public class MinLengthRule implements Rule<String> {
 
-	private final Number minLength;
+	private final int minLength;
 
-	public MinLengthRule(Number minLength) {
+	public MinLengthRule(int minLength) {
 		this.minLength = minLength;
 	}
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("minLength("+this.minLength+")");
+	@Override public String validate(String value) {
+		if (!Util.isEmpty(value) && value.length() > this.minLength) {
+			return "Campo deve possuir ao menos " + this.minLength + " caracteres";
+		}
+		return null;
 	}
 
 }

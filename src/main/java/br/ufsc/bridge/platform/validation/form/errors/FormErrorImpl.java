@@ -10,7 +10,6 @@ import org.joda.time.LocalDate;
 import br.ufsc.bridge.metafy.MetaField;
 import br.ufsc.bridge.metafy.MetaList;
 import br.ufsc.bridge.platform.validation.engine.Rule;
-import br.ufsc.bridge.platform.validation.engine.Validation;
 import br.ufsc.bridge.platform.validation.rules.Rules;
 import br.ufsc.bridge.platform.validation.util.Reflections;
 
@@ -25,12 +24,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 		this.target = target;
 	}
 
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	@Override
-	public void fieldError(String campo, String mensagem) {
+	private void fieldError(String campo, String mensagem) {
 		if (mensagem != null) {
 			this.put(campo, mensagem);
 		} else {
@@ -100,13 +94,14 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 		return valid;
 	}
 
-	private <F> void runRule(MetaField<F> field, Rule rule) {
+	@Override
+	public <F> void checkRule(MetaField<F> field, Rule<F> rule) {
 		if (this.fieldIsValid(field)) {
 			String result;
 			if (this.target != null) {
-				result = Validation.get().validate(Reflections.getValue(this.target, field.getAlias()), rule);
+				result = rule.validate((F) Reflections.getValue(this.target, field.getAlias()));
 			} else {
-				result = Validation.get().validate(null, rule);
+				result = rule.validate(null);
 			}
 			this.fieldError(field, result);
 		}
@@ -145,112 +140,92 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	// Regras
 	@Override
 	public void alfaNumerico(MetaField<String> field) {
-		this.runRule(field, Rules.alfaNumerico);
+		this.checkRule(field, Rules.alfaNumerico);
+	}
+
+	@Override
+	public void beforeToday(MetaField<LocalDate> field) {
+		this.checkRule(field, Rules.beforeToday);
 	}
 
 	@Override
 	public void cep(MetaField<String> field) {
-		this.runRule(field, Rules.cep);
+		this.checkRule(field, Rules.cep);
 	}
 
 	@Override
 	public void cpf(MetaField<String> field) {
-		this.runRule(field, Rules.cpf);
+		this.checkRule(field, Rules.cpf);
 	}
 
 	@Override
 	public void cnpj(MetaField<String> field) {
-		this.runRule(field, Rules.cnpj);
+		this.checkRule(field, Rules.cnpj);
 	}
 
 	@Override
 	public void cns(MetaField<String> field) {
-		this.runRule(field, Rules.cns);
-	}
-
-	@Override
-	public void dataNasc(MetaField<LocalDate> field) {
-		this.runRule(field, Rules.dataNascimento);
-	}
-
-	@Override
-	public void dataMax(MetaField<LocalDate> field) {
-		this.runRule(field, Rules.maxDate);
-	}
-
-	@Override
-	public void duracao(MetaField<String> field) {
-		this.runRule(field, Rules.duracao);
+		this.checkRule(field, Rules.cns);
 	}
 
 	@Override
 	public void email(MetaField<String> field) {
-		this.runRule(field, Rules.email);
+		this.checkRule(field, Rules.email);
 	}
 
 	@Override
 	public void empty(MetaField<?> field) {
-		this.runRule(field, Rules.empty);
+		this.checkRule(field, Rules.empty);
 	}
 
 	@Override
 	public void hora(MetaField<String> field) {
-		this.runRule(field, Rules.hora);
+		this.checkRule(field, Rules.hora);
 	}
 
 	@Override
-	public void length(MetaField<String> field, Number length) {
-		this.runRule(field, Rules.length(length));
+	public void length(MetaField<String> field, int length) {
+		this.checkRule(field, Rules.length(length));
 	}
 
 	@Override
 	public void match(MetaField<String> field, String regex) {
-		this.runRule(field, Rules.match(regex));
+		this.checkRule(field, Rules.match(regex));
 	}
 
 	@Override
-	public void maxLength(MetaField<String> field, Number maxLength) {
-		this.runRule(field, Rules.maxLength(maxLength));
+	public void maxLength(MetaField<String> field, int maxLength) {
+		this.checkRule(field, Rules.maxLength(maxLength));
 	}
 
 	@Override
-	public void maxRange(MetaField<? extends Number> field, Number maxRange) {
-		this.runRule(field, Rules.maxRange(maxRange));
+	public <T extends Number> void maxRange(MetaField<T> field, T maxRange) {
+		this.checkRule(field, Rules.maxRange(maxRange));
 	}
 
 	@Override
-	public void minLength(MetaField<String> field, Number minLength) {
-		this.runRule(field, Rules.minLength(minLength));
+	public void minLength(MetaField<String> field, int minLength) {
+		this.checkRule(field, Rules.minLength(minLength));
 	}
 
 	@Override
-	public void minRange(MetaField<? extends Number> field, Number minRange) {
-		this.runRule(field, Rules.minRange(minRange));
+	public <T extends Number> void minRange(MetaField<T> field, T minRange) {
+		this.checkRule(field, Rules.minRange(minRange));
 	}
 
 	@Override
-	public void nome(MetaField<String> field) {
-		this.runRule(field, Rules.nome);
-	}
-
-	@Override
-	public void range(MetaField<? extends Number> field, Number minRange, Number maxRange) {
-		this.runRule(field, Rules.range(minRange, maxRange));
+	public <T extends Number> void range(MetaField<T> field, T minRange, T maxRange) {
+		this.checkRule(field, Rules.range(minRange, maxRange));
 	}
 
 	@Override
 	public void required(MetaField<?> field) {
-		this.runRule(field, Rules.required);
-	}
-
-	@Override
-	public void senha(MetaField<String> field) {
-		this.runRule(field, Rules.senha);
+		this.checkRule(field, Rules.required);
 	}
 
 	@Override
 	public void telefone(MetaField<String> field) {
-		this.runRule(field, Rules.telefone);
+		this.checkRule(field, Rules.telefone);
 	}
 
 	@Override

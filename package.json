@@ -11,7 +11,7 @@
   },
   "scripts": {
     "clean": "shx rm -rf _bundles lib",
-    "build": "npm run clean && tsc && webpack --progress",
+    "build": "npm run clean && tsc",
     "lint": "tslint -p tsconfig.json",
     "test": "jest"
   },

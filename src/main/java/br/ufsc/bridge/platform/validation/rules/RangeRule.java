@@ -1,11 +1,9 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class RangeRule implements Rule {
+public class RangeRule implements Rule<Number> {
 
 	private final Number maxRange;
 	private final Number minRange;
@@ -15,9 +13,11 @@ public class RangeRule implements Rule {
 		this.minRange = minRange;
 	}
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("range("+this.minRange+", "+this.maxRange+")");
+	@Override public String validate(Number value) {
+		if (!Util.isEmpty(value) && (value.doubleValue() < this.minRange.doubleValue() || value.doubleValue() > this.maxRange.doubleValue())) {
+			return "Campo deve ter valor entre " + this.minRange + " e " + this.maxRange;
+		}
+		return null;
 	}
 
 }

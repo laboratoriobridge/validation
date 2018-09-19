@@ -1,15 +1,15 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
 public class RequiredRule implements Rule {
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("required");
+	@Override public String validate(Object value) {
+		if (Util.isEmpty(value)) {
+			return "Campo é de preenchimento obrigatório";
+		}
+		return null;
 	}
 
 }

@@ -1,11 +1,9 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MatchRule implements Rule {
+public class MatchRule implements Rule<String> {
 
 	private final String regex;
 
@@ -13,9 +11,14 @@ public class MatchRule implements Rule {
 		this.regex = regex;
 	}
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("match(/"+this.regex+"/)");
+	@Override public String validate(String value) {
+		if (!Util.isEmpty(value) && !this.isValid(value)) {
+			return "Um ou mais caracteres informados não são permitidos para esse campo";
+		}
+		return null;
 	}
 
+	public boolean isValid(String value) {
+		return value.matches(this.regex);
+	}
 }

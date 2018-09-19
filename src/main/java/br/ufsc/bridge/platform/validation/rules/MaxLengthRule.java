@@ -1,21 +1,20 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MaxLengthRule implements Rule {
+public class MaxLengthRule implements Rule<String> {
 
-	private final Number maxLength;
+	private final int maxLength;
 
-	public MaxLengthRule(Number maxLength) {
+	public MaxLengthRule(int maxLength) {
 		this.maxLength = maxLength;
 	}
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("maxLength("+this.maxLength+")");
+	@Override public String validate(String value) {
+		if (!Util.isEmpty(value) && value.length() < this.maxLength) {
+			return "Campo deve possuir menos que " + this.maxLength + " caracteres";
+		}
+		return null;
 	}
-
 }
