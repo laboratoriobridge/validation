@@ -6,6 +6,7 @@ import org.joda.time.LocalDate;
 
 import br.ufsc.bridge.metafy.MetaField;
 import br.ufsc.bridge.metafy.MetaList;
+import br.ufsc.bridge.platform.validation.engine.Rule;
 
 public interface FormError extends ValidationError {
 
@@ -14,22 +15,17 @@ public interface FormError extends ValidationError {
 
 	boolean fieldIsValid(MetaField<?> field);
 
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
-	@Deprecated
-	void fieldError(String campo, String mensagem);
-
-	/**
-	 * Usar o equivalente com MetaField.
-	 */
 	void fieldError(MetaField<?> field, String mensagem);
 
 	FormError formError(MetaField<?> field);
 
 	ListError listError(MetaList<?> field);
 
+	<F> void checkRule(MetaField<F> field, Rule<F> rule);
+
 	void alfaNumerico(MetaField<String> field);
+
+	void beforeToday(MetaField<LocalDate> field);
 
 	void cep(MetaField<String> field);
 
@@ -39,37 +35,27 @@ public interface FormError extends ValidationError {
 
 	void cns(MetaField<String> field);
 
-	void dataNasc(MetaField<LocalDate> field);
-
-	void dataMax(MetaField<LocalDate> field);
-
-	void duracao(MetaField<String> field);
-
 	void email(MetaField<String> field);
 
 	void empty(MetaField<?> field);
 
 	void hora(MetaField<String> field);
 
-	void length(MetaField<String> field, Number length);
+	void length(MetaField<String> field, int length);
 
 	void match(MetaField<String> field, String regex);
 
-	void maxLength(MetaField<String> field, Number length);
+	void maxLength(MetaField<String> field, int length);
 
-	void maxRange(MetaField<? extends Number> field, Number maxRange);
+	<T extends Number> void maxRange(MetaField<T> field, T maxRange);
 
-	void minLength(MetaField<String> field, Number minLength);
+	void minLength(MetaField<String> field, int minLength);
 
-	void minRange(MetaField<? extends Number> field, Number minRange);
+	<T extends Number> void minRange(MetaField<T> field, T minRange);
 
-	void nome(MetaField<String> field);
-
-	void range(MetaField<? extends Number> field, Number minRange, Number maxRange);
+	<T extends Number> void range(MetaField<T> field, T minRange, T maxRange);
 
 	void required(MetaField<?> field);
-
-	void senha(MetaField<String> field);
 
 	void telefone(MetaField<String> field);
 

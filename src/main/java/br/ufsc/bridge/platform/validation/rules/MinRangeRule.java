@@ -1,11 +1,9 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MinRangeRule implements Rule {
+public class MinRangeRule implements Rule<Number> {
 
 	private final Number minRange;
 
@@ -13,9 +11,11 @@ public class MinRangeRule implements Rule {
 		this.minRange = minRange;
 	}
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("minRange("+this.minRange+")");
+	@Override public String validate(Number value) {
+		if (!Util.isEmpty(value) && value.doubleValue() < this.minRange.doubleValue()) {
+			return "Valor inserido deve ser maior ou igual a " + this.minRange;
+		}
+		return null;
 	}
 
 }

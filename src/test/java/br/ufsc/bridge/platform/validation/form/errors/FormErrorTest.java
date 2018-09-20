@@ -29,12 +29,9 @@ public class FormErrorTest {
 		errors.cnpj(meta.cnpj);
 		errors.cns(meta.cns);
 		errors.cpf(meta.cpf);
-		errors.dataNasc(meta.dataNascimento);
-		errors.duracao(meta.duracao);
 		errors.email(meta.email);
 		errors.hora(meta.hora);
-		errors.dataMax(meta.maxDate);
-		errors.nome(meta.nome);
+		errors.beforeToday(meta.maxDate);
 		errors.required(meta.required);
 		errors.telefone(meta.telefone);
 		errors.validateList(meta.list, (item, itemError) -> {
@@ -55,12 +52,9 @@ public class FormErrorTest {
 		errors.cnpj(meta.cnpj);
 		errors.cns(meta.cns);
 		errors.cpf(meta.cpf);
-		errors.dataNasc(meta.dataNascimento);
-		errors.duracao(meta.duracao);
 		errors.email(meta.email);
 		errors.hora(meta.hora);
-		errors.dataMax(meta.maxDate);
-		errors.nome(meta.nome);
+		errors.beforeToday(meta.maxDate);
 		errors.required(meta.required);
 		errors.telefone(meta.telefone);
 		errors.validateList(meta.list, (item, itemError) -> {

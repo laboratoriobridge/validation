@@ -1,15 +1,17 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class CepRule implements Rule {
+public class CepRule implements Rule<String> {
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("cep");
+	private MatchRule match = new MatchRule("^[0-9]{8}$");
+
+	@Override public String validate(String value) {
+		if (!Util.isEmpty(value) && !this.match.isValid(value)) {
+			return "O CEP informado é inválido";
+		}
+		return null;
 	}
 
 }

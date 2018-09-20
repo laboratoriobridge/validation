@@ -1,11 +1,9 @@
 package br.ufsc.bridge.platform.validation.rules;
 
-import javax.script.ScriptException;
-
-import br.ufsc.bridge.platform.validation.engine.Engine;
 import br.ufsc.bridge.platform.validation.engine.Rule;
+import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MaxRangeRule implements Rule {
+public class MaxRangeRule implements Rule<Number> {
 
 	private final Number maxRange;
 
@@ -13,9 +11,10 @@ public class MaxRangeRule implements Rule {
 		this.maxRange = maxRange;
 	}
 
-	@Override
-	public Object get(Engine engine) throws ScriptException {
-		return engine.evalRule("maxRange("+this.maxRange+")");
+	@Override public String validate(Number value) {
+		if (!Util.isEmpty(value) && value.doubleValue() > this.maxRange.doubleValue()) {
+			return "Valor inserido deve ser menor ou igual a " + this.maxRange;
+		}
+		return null;
 	}
-
 }
