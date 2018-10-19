@@ -1,8 +1,15 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any
 
     tools {
         maven "maven-3"
+    }
+
+    environment {
+        SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
+        GITHUB_SECRET = credentials('GITHUB_SECRET')
     }
 
     stages {
@@ -19,13 +26,9 @@ pipeline {
         stage("Sonar Master Scan") {
             when { branch "master" }
             steps {
-                 withCredentials([
-                    string(credentialsId: 'SONARQUBE_TOKEN', variable: 'SONARQUBE_TOKEN'),
-                ]) {
-                    sh "mvn sonar:sonar \
-                        -Dsonar.host.url=${SONARQUBE_HOST} \
-                        -Dsonar.login=${SONARQUBE_TOKEN}"
-                }
+                 sh "mvn -B sonar:sonar \
+                     -Dsonar.host.url=${SONARQUBE_HOST} \
+                     -Dsonar.login=${SONARQUBE_TOKEN}"
             }
         }
         stage("Record Master Coverage") {
@@ -43,21 +46,16 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([
-                    string(credentialsId: 'SONARQUBE_TOKEN', variable: 'SONARQUBE_TOKEN'),
-                    string(credentialsId: 'GITHUB_SECRET', variable: 'GITHUB_SECRET'),
-                ]) {
-                    sh "mvn sonar:sonar \
-                        -Dsonar.host.url=${SONARQUBE_HOST} \
-                        -Dsonar.login=${SONARQUBE_TOKEN} \
-                        -Dsonar.analysis.mode=preview \
-                        -Dsonar.github.repository=laboratoriobridge/pec \
-                        -Dsonar.github.pullRequest=${env.CHANGE_ID} \
-                        -Dsonar.github.oauth=${GITHUB_SECRET}"
+                sh "mvn -B sonar:sonar \
+                    -Dsonar.host.url=${SONARQUBE_HOST} \
+                    -Dsonar.login=${SONARQUBE_TOKEN} \
+                    -Dsonar.analysis.mode=preview \
+                    -Dsonar.github.repository=laboratoriobridge/validation \
+                    -Dsonar.github.pullRequest=${env.CHANGE_ID} \
+                    -Dsonar.github.oauth=${GITHUB_SECRET}"
 
-                    script { currentBuild.result = 'SUCCESS' }
-                    step([$class: 'CompareCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
-                }
+                script { currentBuild.result = 'SUCCESS' }
+                step([$class: 'CompareCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
             }
         }
     }

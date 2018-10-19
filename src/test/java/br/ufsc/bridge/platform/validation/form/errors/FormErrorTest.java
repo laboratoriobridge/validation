@@ -1,13 +1,14 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
 import br.ufsc.bridge.metafy.Metafy;
+import br.ufsc.bridge.platform.validation.rules.Rules;
 
 public class FormErrorTest {
 
@@ -25,18 +26,19 @@ public class FormErrorTest {
 
 		FormError errors = new FormErrorImpl(form);
 
-		errors.cep(meta.cep);
-		errors.cnpj(meta.cnpj);
-		errors.cns(meta.cns);
-		errors.cpf(meta.cpf);
-		errors.email(meta.email);
-		errors.hora(meta.hora);
-		errors.beforeToday(meta.maxDate);
-		errors.required(meta.required);
-		errors.telefone(meta.telefone);
-		errors.validateList(meta.list, (item, itemError) -> {
-			itemError.required(submeta.nome);
-		});
+		errors
+				.check(meta.cep, Rules.cep)
+				.check(meta.cnpj, Rules.cnpj)
+				.check(meta.cns, Rules.cns)
+				.check(meta.cpf, Rules.cpf)
+				.check(meta.email, Rules.email)
+				.check(meta.hora, Rules.hour)
+				.check(meta.maxDate, Rules.beforeToday)
+				.check(meta.required, Rules.required)
+				.check(meta.telefone, Rules.phone)
+				.forEach(meta.list, (item, itemError) ->
+						itemError.check(submeta.nome, Rules.required)
+				);
 
 		Assert.assertTrue(errors.isValid());
 	}
@@ -48,20 +50,21 @@ public class FormErrorTest {
 
 		FormError errors = new FormErrorImpl(form);
 
-		errors.cep(meta.cep);
-		errors.cnpj(meta.cnpj);
-		errors.cns(meta.cns);
-		errors.cpf(meta.cpf);
-		errors.email(meta.email);
-		errors.hora(meta.hora);
-		errors.beforeToday(meta.maxDate);
-		errors.required(meta.required);
-		errors.telefone(meta.telefone);
-		errors.validateList(meta.list, (item, itemError) -> {
-			itemError.required(submeta.nome);
-		});
+		errors
+				.check(meta.cep, Rules.cep)
+				.check(meta.cnpj, Rules.cnpj)
+				.check(meta.cns, Rules.cns)
+				.check(meta.cpf, Rules.cpf)
+				.check(meta.email, Rules.email)
+				.check(meta.hora, Rules.hour)
+				.check(meta.maxDate, Rules.beforeToday)
+				.check(meta.required, Rules.required)
+				.check(meta.telefone, Rules.phone)
+				.forEach(meta.list, (item, itemError) ->
+						itemError.check(submeta.nome, Rules.required)
+				);
 
-		Assert.assertFalse(errors.fieldIsValid(meta.list));
+		Assert.assertFalse(errors.isValid(meta.list));
 		Assert.assertFalse(errors.isValid());
 	}
 
