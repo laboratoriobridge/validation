@@ -12,9 +12,9 @@ public class Rules {
 	public static final CpfRule cpf = new CpfRule();
 	public static final EmailRule email = new EmailRule();
 	public static final EmptyRule empty = new EmptyRule();
-	public static final HoraRule hora = new HoraRule();
+	public static final HoraRule hour = new HoraRule();
 	public static final RequiredRule required = new RequiredRule();
-	public static final TelefoneRule telefone = new TelefoneRule();
+	public static final TelefoneRule phone = new TelefoneRule();
 
 	private Rules() {
 		// nada a fazer

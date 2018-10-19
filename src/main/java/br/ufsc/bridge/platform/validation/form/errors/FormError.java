@@ -1,8 +1,7 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
+import java.time.LocalDate;
 import java.util.function.BiConsumer;
-
-import org.joda.time.LocalDate;
 
 import br.ufsc.bridge.metafy.MetaField;
 import br.ufsc.bridge.metafy.MetaList;
@@ -13,7 +12,7 @@ public interface FormError extends ValidationError {
 	@Override
 	boolean isValid();
 
-	boolean fieldIsValid(MetaField<?> field);
+	boolean isValid(MetaField<?> field);
 
 	void fieldError(MetaField<?> field, String mensagem);
 
@@ -21,44 +20,62 @@ public interface FormError extends ValidationError {
 
 	ListError listError(MetaList<?> field);
 
-	<F> void checkRule(MetaField<F> field, Rule<F> rule);
+	<F> FormError check(MetaField<F> field, Rule<F> rule);
 
+	@Deprecated
 	void alfaNumerico(MetaField<String> field);
 
+	@Deprecated
 	void beforeToday(MetaField<LocalDate> field);
 
+	@Deprecated
 	void cep(MetaField<String> field);
 
+	@Deprecated
 	void cpf(MetaField<String> field);
 
+	@Deprecated
 	void cnpj(MetaField<String> field);
 
+	@Deprecated
 	void cns(MetaField<String> field);
 
+	@Deprecated
 	void email(MetaField<String> field);
 
+	@Deprecated
 	void empty(MetaField<?> field);
 
-	void hora(MetaField<String> field);
+	@Deprecated
+	void hour(MetaField<String> field);
 
+	@Deprecated
 	void length(MetaField<String> field, int length);
 
+	@Deprecated
 	void match(MetaField<String> field, String regex);
 
+	@Deprecated
 	void maxLength(MetaField<String> field, int length);
 
+	@Deprecated
 	<T extends Number> void maxRange(MetaField<T> field, T maxRange);
 
+	@Deprecated
 	void minLength(MetaField<String> field, int minLength);
 
+	@Deprecated
 	<T extends Number> void minRange(MetaField<T> field, T minRange);
 
+	@Deprecated
 	<T extends Number> void range(MetaField<T> field, T minRange, T maxRange);
 
+	@Deprecated
 	void required(MetaField<?> field);
 
-	void telefone(MetaField<String> field);
+	@Deprecated
+	void phone(MetaField<String> field);
 
-	<T> void validateList(MetaList<T> field, BiConsumer<T, FormError> itemValidator);
+	<T> FormError forEach(MetaList<T> field, BiConsumer<T, FormError> itemValidator);
 
 }

@@ -1,11 +1,10 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
-
-import org.joda.time.LocalDate;
 
 import br.ufsc.bridge.metafy.MetaField;
 import br.ufsc.bridge.metafy.MetaList;
@@ -62,7 +61,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	}
 
 	@Override
-	public boolean fieldIsValid(MetaField<?> field) {
+	public boolean isValid(MetaField<?> field) {
 		boolean valid = true;
 		Object error = this.get(field.getAlias());
 		if (error instanceof String) {
@@ -95,8 +94,8 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	}
 
 	@Override
-	public <F> void checkRule(MetaField<F> field, Rule<F> rule) {
-		if (this.fieldIsValid(field)) {
+	public <F> FormError check(MetaField<F> field, Rule<F> rule) {
+		if (this.isValid(field)) {
 			String result;
 			if (this.target != null) {
 				result = rule.validate((F) Reflections.getValue(this.target, field.getAlias()));
@@ -105,6 +104,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 			}
 			this.fieldError(field, result);
 		}
+		return this;
 	}
 
 	@Override
@@ -140,101 +140,101 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	// Regras
 	@Override
 	public void alfaNumerico(MetaField<String> field) {
-		this.checkRule(field, Rules.alfaNumerico);
+		this.check(field, Rules.alfaNumerico);
 	}
 
 	@Override
 	public void beforeToday(MetaField<LocalDate> field) {
-		this.checkRule(field, Rules.beforeToday);
+		this.check(field, Rules.beforeToday);
 	}
 
 	@Override
 	public void cep(MetaField<String> field) {
-		this.checkRule(field, Rules.cep);
+		this.check(field, Rules.cep);
 	}
 
 	@Override
 	public void cpf(MetaField<String> field) {
-		this.checkRule(field, Rules.cpf);
+		this.check(field, Rules.cpf);
 	}
 
 	@Override
 	public void cnpj(MetaField<String> field) {
-		this.checkRule(field, Rules.cnpj);
+		this.check(field, Rules.cnpj);
 	}
 
 	@Override
 	public void cns(MetaField<String> field) {
-		this.checkRule(field, Rules.cns);
+		this.check(field, Rules.cns);
 	}
 
 	@Override
 	public void email(MetaField<String> field) {
-		this.checkRule(field, Rules.email);
+		this.check(field, Rules.email);
 	}
 
 	@Override
 	public void empty(MetaField<?> field) {
-		this.checkRule(field, Rules.empty);
+		this.check(field, Rules.empty);
 	}
 
 	@Override
-	public void hora(MetaField<String> field) {
-		this.checkRule(field, Rules.hora);
+	public void hour(MetaField<String> field) {
+		this.check(field, Rules.hour);
 	}
 
 	@Override
 	public void length(MetaField<String> field, int length) {
-		this.checkRule(field, Rules.length(length));
+		this.check(field, Rules.length(length));
 	}
 
 	@Override
 	public void match(MetaField<String> field, String regex) {
-		this.checkRule(field, Rules.match(regex));
+		this.check(field, Rules.match(regex));
 	}
 
 	@Override
 	public void maxLength(MetaField<String> field, int maxLength) {
-		this.checkRule(field, Rules.maxLength(maxLength));
+		this.check(field, Rules.maxLength(maxLength));
 	}
 
 	@Override
 	public <T extends Number> void maxRange(MetaField<T> field, T maxRange) {
-		this.checkRule(field, Rules.maxRange(maxRange));
+		this.check(field, Rules.maxRange(maxRange));
 	}
 
 	@Override
 	public void minLength(MetaField<String> field, int minLength) {
-		this.checkRule(field, Rules.minLength(minLength));
+		this.check(field, Rules.minLength(minLength));
 	}
 
 	@Override
 	public <T extends Number> void minRange(MetaField<T> field, T minRange) {
-		this.checkRule(field, Rules.minRange(minRange));
+		this.check(field, Rules.minRange(minRange));
 	}
 
 	@Override
 	public <T extends Number> void range(MetaField<T> field, T minRange, T maxRange) {
-		this.checkRule(field, Rules.range(minRange, maxRange));
+		this.check(field, Rules.range(minRange, maxRange));
 	}
 
 	@Override
 	public void required(MetaField<?> field) {
-		this.checkRule(field, Rules.required);
+		this.check(field, Rules.required);
 	}
 
 	@Override
-	public void telefone(MetaField<String> field) {
-		this.checkRule(field, Rules.telefone);
+	public void phone(MetaField<String> field) {
+		this.check(field, Rules.phone);
 	}
 
 	@Override
-	public <T> void validateList(MetaList<T> field, BiConsumer<T, FormError> itemValidator) {
+	public <T> FormError forEach(MetaList<T> field, BiConsumer<T, FormError> itemValidator) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) this.getFieldValue(field);
 
 		if (list == null || list.isEmpty()) {
-			return;
+			return this;
 		}
 
 		ListError listErrors = this.listError(field);
@@ -243,6 +243,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 			T item = list.get(i);
 			itemValidator.accept(item, listErrors.itemError(i));
 		}
+		return this;
 	}
 
 }
