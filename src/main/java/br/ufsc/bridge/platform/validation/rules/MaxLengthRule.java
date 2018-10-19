@@ -11,8 +11,9 @@ public class MaxLengthRule implements Rule<String> {
 		this.maxLength = maxLength;
 	}
 
-	@Override public String validate(String value) {
-		if (!Util.isEmpty(value) && value.length() < this.maxLength) {
+	@Override
+	public String validate(String value) {
+		if (!Util.isEmpty(value) && value.length() > this.maxLength) {
 			return "Campo deve possuir menos que " + this.maxLength + " caracteres";
 		}
 		return null;
