@@ -10,7 +10,7 @@
     <description>Java validation library</description>
   	<url>https://github.com/laboratoriobridge/validation</url>
 
-    <licenses>
+	<licenses>
 		<license>
 			<name>MIT License</name>
 			<url>https://opensource.org/licenses/MIT</url>
