@@ -4,7 +4,27 @@
     <groupId>br.ufsc.bridge</groupId>
     <artifactId>validation</artifactId>
     <version>1.4.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
     <name>Bridge Platform - Validation</name>
+    <description>Java validation library</description>
+  	<url>https://github.com/laboratoriobridge/validation</url>
+
+    <licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Laboratório Bridge</name>
+			<email>maven@bridge.ufsc.br</email>
+			<organization>Laboratório Bridge</organization>
+			<organizationUrl>https://bridge.ufsc.br/</organizationUrl>
+		</developer>
+	</developers>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -86,20 +106,54 @@
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
 
     <distributionManagement>
         <repository>
-            <id>repo-bridge</id>
-            <name>Internal Releases</name>
-            <url>https://repositorio.bridge.ufsc.br/repository/releases/</url>
-        </repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	    </repository>
         <snapshotRepository>
             <id>repo-bridge</id>
             <url>https://repositorio.bridge.ufsc.br/repository/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+
+	<profiles>
+		<profile>
+		  <id>sign</id>
+		  <build>
+		    <plugins>
+		      <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-gpg-plugin</artifactId>
+		        <version>1.5</version>
+		        <executions>
+		          <execution>
+		            <id>sign-artifacts</id>
+		            <phase>verify</phase>
+		            <goals>
+		              <goal>sign</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin>
+		    </plugins>
+		  </build>
+		</profile>
+	</profiles>
 
     <scm>
         <connection>scm:git:git@github.com:laboratoriobridge/validation.git</connection>
