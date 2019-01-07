@@ -3,7 +3,7 @@
 
     <groupId>br.ufsc.bridge</groupId>
     <artifactId>validation</artifactId>
-    <version>1.3.9-SNAPSHOT</version>
+    <version>1.4.0-SNAPSHOT</version>
     <name>Bridge Platform - Validation</name>
 
     <properties>
@@ -15,11 +15,6 @@
         <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.jacoco.reportMissing.force.zero>true</sonar.jacoco.reportMissing.force.zero>
-
-        <!-- Frontend -->
-        <node.version>v8.9.4</node.version>
-        <npm.version>5.6.0</npm.version>
-        <yarn.version>v1.3.2</yarn.version>
     </properties>
 
     <dependencies>
@@ -85,105 +80,11 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>install node and yarn</id>
-                        <goals>
-                            <goal>install-node-and-yarn</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>${node.version}</nodeVersion>
-                            <yarnVersion>${yarn.version}</yarnVersion>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>${node.version}</nodeVersion>
-                            <npmVersion>${npm.version}</npmVersion>
-                        </configuration>
-                    </execution>
-
-
-                    <execution>
-                        <id>yarn install</id>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>yarn test</id>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>test</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>yarn build</id>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>run build</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>yarn-version</id>
-                        <phase>none</phase>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>version --new-version ${project.version} --no-git-tag-version</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>npm publish</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>publish</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.2</version>
-                <configuration>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <preparationGoals>
-                        frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare release ${releaseVersion}' -DpushChanges=false
-                    </preparationGoals>
-                    <completionGoals>
-                        frontend:yarn@yarn-version scm:checkin -Dmessage='[maven-release-plugin] prepare for next development iteration'
-                    </completionGoals>
-                </configuration>
             </plugin>
         </plugins>
     </build>
