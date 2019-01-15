@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 import br.ufsc.bridge.metafy.MetaField;
 import br.ufsc.bridge.metafy.MetaList;
@@ -12,22 +14,28 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 import br.ufsc.bridge.platform.validation.rules.Rules;
 import br.ufsc.bridge.platform.validation.util.Reflections;
 
-public class FormErrorImpl extends HashMap<String, Object> implements FormError {
+public class FormErrorImpl implements FormError {
 
 	private static final long serialVersionUID = -6446758048046334551L;
 
 	private transient Object target;
+	private String rootError;
+	private Map<String, Object> errors = new HashMap<>();
 
 	public FormErrorImpl(Object target) {
 		super();
 		this.target = target;
 	}
 
+	@Override public void error(String mensagem) {
+		this.rootError = mensagem;
+	}
+
 	private void fieldError(String campo, String mensagem) {
 		if (mensagem != null) {
-			this.put(campo, mensagem);
+			this.errors.put(campo, mensagem);
 		} else {
-			this.remove(campo);
+			this.errors.remove(campo);
 		}
 	}
 
@@ -42,20 +50,20 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 
 	@Override
 	public FormError formError(MetaField<?> field) {
-		FormError error = (FormError) this.get(field.getAlias());
+		FormError error = (FormError) this.errors.get(field.getAlias());
 		if (error == null) {
 			error = new FormErrorImpl(this.getFieldValue(field));
-			this.put(field.getAlias(), error);
+			this.errors.put(field.getAlias(), error);
 		}
 		return error;
 	}
 
 	@Override
 	public ListError listError(MetaList<?> field) {
-		ListError error = (ListError) this.get(field.getAlias());
+		ListError error = (ListError) this.errors.get(field.getAlias());
 		if (error == null) {
 			error = new ListErrorImpl((List<?>) this.getFieldValue(field));
-			this.put(field.getAlias(), error);
+			this.errors.put(field.getAlias(), error);
 		}
 		return error;
 	}
@@ -63,7 +71,7 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 	@Override
 	public boolean isValid(MetaField<?> field) {
 		boolean valid = true;
-		Object error = this.get(field.getAlias());
+		Object error = this.errors.get(field.getAlias());
 		if (error instanceof String) {
 			valid = false;
 		} else if (error instanceof ValidationError) {
@@ -74,23 +82,41 @@ public class FormErrorImpl extends HashMap<String, Object> implements FormError 
 
 	@Override
 	public boolean isValid() {
-		boolean valid = true;
+		boolean valid = this.rootError == null;
 
-		Iterator<Object> iterator = this.values().iterator();
-		while (iterator.hasNext()) {
-			Object validationError = iterator.next();
-			if (validationError instanceof ValidationError) {
-				boolean childFormValid = ((ValidationError) validationError).isValid();
-				valid = valid && childFormValid;
-				if (childFormValid) {
-					iterator.remove();
+		if (valid) {
+			Iterator<Object> iterator = this.errors.values().iterator();
+			while (iterator.hasNext()) {
+				Object validationError = iterator.next();
+				if (validationError instanceof ValidationError) {
+					boolean childFormValid = ((ValidationError) validationError).isValid();
+					valid = valid && childFormValid;
+					if (childFormValid) {
+						iterator.remove();
+					}
+				} else {
+					valid = false;
 				}
-			} else {
-				valid = false;
 			}
 		}
 
 		return valid;
+	}
+
+	@Override public Object getErrors() {
+		if (this.rootError != null) {
+			return this.rootError;
+		}
+
+		return this.errors.entrySet()
+				.stream()
+				.collect(Collectors.toMap(entry -> entry.getKey(), entry -> {
+					Object value = entry.getValue();
+					if (value instanceof ValidationError) {
+						return ((ValidationError) value).getErrors();
+					}
+					return value;
+				}));
 	}
 
 	@Override

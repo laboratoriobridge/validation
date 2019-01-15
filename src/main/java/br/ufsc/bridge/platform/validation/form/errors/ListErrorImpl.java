@@ -3,44 +3,62 @@ package br.ufsc.bridge.platform.validation.form.errors;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("rawtypes")
-public class ListErrorImpl extends ArrayList implements ListError {
+public class ListErrorImpl implements ListError {
 
 	private static final long serialVersionUID = 6107994429283159738L;
 
 	private transient List<?> target;
+	private String rootError;
+	private List<ValidationError> itemErrors = new ArrayList<>();
 
 	public ListErrorImpl(List<?> target) {
 		super();
 		this.target = target;
 	}
 
+	@Override public void error(String mensagem) {
+		this.rootError = mensagem;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public FormError itemError(int index) {
 		FormErrorImpl itemErrors = new FormErrorImpl(this.target.get(index));
-		this.add(index, itemErrors);
+		this.itemErrors.add(index, itemErrors);
 		return itemErrors;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean isValid() {
-		boolean valid = true;
+		boolean valid = this.rootError == null;
 
-		Iterator<ValidationError> iterator = this.iterator();
-		while (iterator.hasNext()) {
-			ValidationError validationError = iterator.next();
-			if (validationError instanceof FormErrorImpl) {
-				boolean childFormValid = ((FormErrorImpl) validationError).isValid();
-				valid = valid && childFormValid;
-			} else {
-				valid = false;
+		if (valid) {
+			Iterator<ValidationError> iterator = this.itemErrors.iterator();
+			while (iterator.hasNext()) {
+				ValidationError validationError = iterator.next();
+				if (validationError instanceof FormErrorImpl) {
+					boolean childFormValid = ((FormErrorImpl) validationError).isValid();
+					valid = valid && childFormValid;
+				} else {
+					valid = false;
+				}
 			}
 		}
 
 		return valid;
+	}
+
+	@Override public Object getErrors() {
+		if (this.rootError != null) {
+			return this.rootError;
+		}
+		return this.itemErrors.stream()
+				.map(ValidationError::getErrors)
+				.collect(Collectors.toList());
 	}
 
 	@Override
