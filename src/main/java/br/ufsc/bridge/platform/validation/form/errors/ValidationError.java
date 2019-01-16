@@ -6,4 +6,6 @@ public interface ValidationError extends Serializable {
 
 	boolean isValid();
 
+	Object getErrors();
+
 }
