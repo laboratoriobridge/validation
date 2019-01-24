@@ -1,10 +1,10 @@
 import { ValidationMessages } from '../'
 
 export const messages: ValidationMessages = {
-    cep: (value, ...args) => `O CEP informado é inválido`,
-    cnpj: (value, ...args) => `O CNPJ informado é inválido`,
-    cns: (value, ...args) => `O CNS informado é inválido`,
-    cpf: (value, ...args) => `O CPF informado é inválido`,
+    cep: (value, ...args) => `CEP inválido`,
+    cnpj: (value, ...args) => `CNPJ inválido`,
+    cns: (value, ...args) => `CNS inválido`,
+    cpf: (value, ...args) => `CPF inválido`,
     dataNasc: (value, ...args) => `Idade máxima permitida é 130 anos`,
     maxDate: (value, ...args) => `Data não pode ser superior à data atual`,
     duracao: (value, ...args) => `Duração informada é inválida`,

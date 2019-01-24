@@ -16,6 +16,8 @@ public interface FormError extends ValidationError {
 
 	void fieldError(MetaField<?> field, String mensagem);
 
+	void error(String mensagem);
+
 	FormError formError(MetaField<?> field);
 
 	ListError listError(MetaList<?> field);
@@ -58,17 +60,14 @@ public interface FormError extends ValidationError {
 	@Deprecated
 	void maxLength(MetaField<String> field, int length);
 
-	@Deprecated
-	<T extends Number> void maxRange(MetaField<T> field, T maxRange);
+	@Deprecated <T extends Number> void maxRange(MetaField<T> field, T maxRange);
 
 	@Deprecated
 	void minLength(MetaField<String> field, int minLength);
 
-	@Deprecated
-	<T extends Number> void minRange(MetaField<T> field, T minRange);
+	@Deprecated <T extends Number> void minRange(MetaField<T> field, T minRange);
 
-	@Deprecated
-	<T extends Number> void range(MetaField<T> field, T minRange, T maxRange);
+	@Deprecated <T extends Number> void range(MetaField<T> field, T minRange, T maxRange);
 
 	@Deprecated
 	void required(MetaField<?> field);

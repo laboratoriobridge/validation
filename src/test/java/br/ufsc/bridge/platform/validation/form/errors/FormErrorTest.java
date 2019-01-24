@@ -3,6 +3,7 @@ package br.ufsc.bridge.platform.validation.form.errors;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -79,6 +80,49 @@ public class FormErrorTest {
 		Assert.assertTrue(errors.isValid());
 	}
 
+	@Test
+	public void formRootError() {
+		Form form = new Form();
+
+		FormError errors = new FormErrorImpl(form);
+
+		errors.error("Objeto inválido");
+
+		Assert.assertFalse(errors.isValid());
+		Assert.assertEquals("Objeto inválido", errors.getErrors());
+	}
+
+	@Test
+	public void subFormRootError() {
+		Form form = new Form();
+
+		FormError errors = new FormErrorImpl(form);
+
+		errors.formError(meta.sub()).error("Objeto inválido");
+
+		errors.error("Objeto inválido");
+
+		Assert.assertFalse(errors.isValid());
+		Assert.assertEquals("Objeto inválido", errors.getErrors());
+
+		errors.error(null);
+
+		Assert.assertFalse(errors.isValid());
+		Assert.assertEquals("Objeto inválido", ((Map) errors.getErrors()).get(meta.sub().getAlias()));
+	}
+
+	@Test
+	public void listRootError() {
+		Form form = new Form();
+
+		FormError errors = new FormErrorImpl(form);
+
+		errors.listError(meta.list).error("Objeto inválido");
+
+		Assert.assertFalse(errors.isValid());
+		Assert.assertEquals("Objeto inválido", ((Map) errors.getErrors()).get(meta.list.getAlias()));
+	}
+
 	@Metafy
 	public static class Form {
 		private String cep;
@@ -94,6 +138,7 @@ public class FormErrorTest {
 		private String required;
 		private String telefone;
 		private List<SubForm> list;
+		private SubForm sub;
 
 		public String getCep() {
 			return this.cep;
@@ -197,6 +242,14 @@ public class FormErrorTest {
 
 		public void setList(List<SubForm> list) {
 			this.list = list;
+		}
+
+		public SubForm getSub() {
+			return this.sub;
+		}
+
+		public void setSub(SubForm sub) {
+			this.sub = sub;
 		}
 	}
 
