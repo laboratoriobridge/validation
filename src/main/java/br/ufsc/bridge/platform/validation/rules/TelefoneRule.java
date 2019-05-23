@@ -9,7 +9,7 @@ public class TelefoneRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && (this.hasTodosNumerosIguais(value) || !this.match.isValid(value))) {
-			return "Telefone informado é inválido";
+			return "Campo inválido";
 		}
 		return null;
 	}

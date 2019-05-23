@@ -7,7 +7,7 @@ public class EmptyRule implements Rule {
 
 	@Override public String validate(Object value) {
 		if (!Util.isEmpty(value)) {
-			return "Campo não deve ser preenchido";
+			return "Não deve ser preenchido";
 		}
 		return null;
 	}

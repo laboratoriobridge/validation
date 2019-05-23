@@ -10,7 +10,7 @@ public class CnsRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && !this.isValid(value)) {
-			return "O CNS informado é inválido";
+			return "Campo inválido";
 		}
 		return null;
 	}

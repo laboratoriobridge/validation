@@ -14,7 +14,7 @@ public class MinLengthRule implements Rule<String> {
 	@Override
 	public String validate(String value) {
 		if (!Util.isEmpty(value) && value.length() < this.minLength) {
-			return "Campo deve possuir ao menos " + this.minLength + " caracteres";
+			return "Deve possuir ao menos " + this.minLength + " caracteres";
 		}
 		return null;
 	}

@@ -9,7 +9,7 @@ public class CepRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && !this.match.isValid(value)) {
-			return "O CEP informado é inválido";
+			return "Campo é inválido";
 		}
 		return null;
 	}

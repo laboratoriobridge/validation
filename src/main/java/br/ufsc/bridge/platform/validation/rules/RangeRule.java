@@ -15,7 +15,7 @@ public class RangeRule implements Rule<Number> {
 
 	@Override public String validate(Number value) {
 		if (!Util.isEmpty(value) && (value.doubleValue() < this.minRange.doubleValue() || value.doubleValue() > this.maxRange.doubleValue())) {
-			return "Campo deve ter valor entre " + this.minRange + " e " + this.maxRange;
+			return "Deve ter valor entre " + this.minRange + " e " + this.maxRange;
 		}
 		return null;
 	}

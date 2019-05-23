@@ -7,7 +7,7 @@ public class RequiredRule implements Rule {
 
 	@Override public String validate(Object value) {
 		if (Util.isEmpty(value)) {
-			return "Campo é de preenchimento obrigatório";
+			return "Preenchimento obrigatório";
 		}
 		return null;
 	}

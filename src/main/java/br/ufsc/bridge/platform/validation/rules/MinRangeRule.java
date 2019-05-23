@@ -13,7 +13,7 @@ public class MinRangeRule implements Rule<Number> {
 
 	@Override public String validate(Number value) {
 		if (!Util.isEmpty(value) && value.doubleValue() < this.minRange.doubleValue()) {
-			return "Valor inserido deve ser maior ou igual a " + this.minRange;
+			return "Deve ser maior ou igual a " + this.minRange;
 		}
 		return null;
 	}
