@@ -9,7 +9,7 @@ public class HoraRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && !this.match.isValid(value)) {
-			return "Horário informado é inválido";
+			return "Campo inválido";
 		}
 		return null;
 	}

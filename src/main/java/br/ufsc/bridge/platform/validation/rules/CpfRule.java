@@ -13,7 +13,7 @@ public class CpfRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && !this.isValid(value)) {
-			return "O CPF informado é inválido";
+			return "CPF inválido";
 		}
 
 		return null;

@@ -10,7 +10,7 @@ public class BeforeTodayRule implements Rule<LocalDate> {
 	@Override
 	public String validate(LocalDate value) {
 		if (!Util.isEmpty(value) && !value.isBefore(LocalDate.now())) {
-			return "Data não pode ser superior à data atual";
+			return "Não pode ser superior à data atual";
 		}
 		return null;
 	}
