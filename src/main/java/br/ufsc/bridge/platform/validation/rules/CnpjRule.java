@@ -7,7 +7,7 @@ public class CnpjRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && !this.isValid(value)) {
-			return "O CNPJ informado é inválido";
+			return "Campo inválido";
 		}
 
 		return null;

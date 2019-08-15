@@ -13,7 +13,7 @@ public class MaxRangeRule implements Rule<Number> {
 
 	@Override public String validate(Number value) {
 		if (!Util.isEmpty(value) && value.doubleValue() > this.maxRange.doubleValue()) {
-			return "Valor inserido deve ser menor ou igual a " + this.maxRange;
+			return "Deve ser menor ou igual a " + this.maxRange;
 		}
 		return null;
 	}

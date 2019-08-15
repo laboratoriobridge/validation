@@ -5,6 +5,7 @@ import br.ufsc.bridge.platform.validation.engine.Rule;
 public class Rules {
 
 	public static final AlfaNumericoRule alfaNumerico = new AlfaNumericoRule();
+	public static final BeforeEqualTodayRule beforeEqualToday = new BeforeEqualTodayRule();
 	public static final BeforeTodayRule beforeToday = new BeforeTodayRule();
 	public static final CepRule cep = new CepRule();
 	public static final CnpjRule cnpj = new CnpjRule();
