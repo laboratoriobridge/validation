@@ -30,7 +30,6 @@ public class ListErrorImpl implements ListError {
 		FormError itemError = new FormErrorImpl(this.target.get(index));
 		this.itemErrors.add(index, itemError);
 		return itemError;
-
 	}
 	
 	@Override
