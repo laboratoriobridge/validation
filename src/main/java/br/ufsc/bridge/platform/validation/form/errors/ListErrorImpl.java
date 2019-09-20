@@ -23,13 +23,14 @@ public class ListErrorImpl implements ListError {
 	}
 
 	@Override
-	public FormError itemError(int index) {		
-		FormError itemError = this.itemErrors.get(index);
-		if (itemError == null) {
-			itemError = new FormErrorImpl(this.target.get(index));
-			this.itemErrors.add(index, itemError);
+	public FormError itemError(int index) {
+		if (this.itemErrors.size() > index) {
+			return this.itemErrors.get(index);
 		}
+		FormError itemError = new FormErrorImpl(this.target.get(index));
+		this.itemErrors.add(index, itemError);
 		return itemError;
+
 	}
 	
 	@Override
