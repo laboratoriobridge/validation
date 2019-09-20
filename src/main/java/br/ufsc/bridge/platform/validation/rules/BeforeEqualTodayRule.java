@@ -10,7 +10,7 @@ public class BeforeEqualTodayRule implements Rule<LocalDate> {
 	@Override
 	public String validate(LocalDate value) {
 		if (!Util.isEmpty(value) && value.compareTo(LocalDate.now()) > 0) {
-			return "Deve ser posterior ou igual à data atual";
+			return "Deve ser anterior ou igual à data atual";
 		}
 		return null;
 	}
