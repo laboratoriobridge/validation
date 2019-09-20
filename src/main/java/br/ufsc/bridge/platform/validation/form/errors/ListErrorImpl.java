@@ -5,14 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("rawtypes")
 public class ListErrorImpl implements ListError {
 
 	private static final long serialVersionUID = 6107994429283159738L;
 
 	private transient List<?> target;
 	private String rootError;
-	private List<ValidationError> itemErrors = new ArrayList<>();
+	private List<FormError> itemErrors = new ArrayList<>();
 
 	public ListErrorImpl(List<?> target) {
 		super();
@@ -23,21 +22,22 @@ public class ListErrorImpl implements ListError {
 		this.rootError = mensagem;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public FormError itemError(int index) {
-		FormErrorImpl itemErrors = new FormErrorImpl(this.target.get(index));
-		this.itemErrors.add(index, itemErrors);
-		return itemErrors;
+		if (this.itemErrors.size() > index) {
+			return this.itemErrors.get(index);
+		}
+		FormError itemError = new FormErrorImpl(this.target.get(index));
+		this.itemErrors.add(index, itemError);
+		return itemError;
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public boolean isValid() {
 		boolean valid = this.rootError == null;
 
 		if (valid) {
-			Iterator<ValidationError> iterator = this.itemErrors.iterator();
+			Iterator<FormError> iterator = this.itemErrors.iterator();
 			while (iterator.hasNext()) {
 				ValidationError validationError = iterator.next();
 				if (validationError instanceof FormErrorImpl) {
