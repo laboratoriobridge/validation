@@ -21,31 +21,31 @@ public class Rules {
 		// nada a fazer
 	}
 
-	public static Rule length(int length) {
+	public static Rule<String> length(int length) {
 		return new LengthRule(length);
 	}
 
-	public static Rule maxLength(int maxLength) {
+	public static Rule<String> maxLength(int maxLength) {
 		return new MaxLengthRule(maxLength);
 	}
 
-	public static Rule minLength(int minLength) {
+	public static Rule<String> minLength(int minLength) {
 		return new MinLengthRule(minLength);
 	}
 
-	public static Rule range(Number minRange, Number maxRange) {
-		return new RangeRule(minRange, maxRange);
+	public static <T extends Number> Rule<T> range(T minRange, T maxRange) {
+		return new RangeRule<>(minRange, maxRange);
 	}
 
-	public static Rule maxRange(Number maxRange) {
-		return new MaxRangeRule(maxRange);
+	public static <T extends Number> Rule<T> maxRange(T maxRange) {
+		return new MaxRangeRule<>(maxRange);
 	}
 
-	public static Rule minRange(Number minRange) {
-		return new MinRangeRule(minRange);
+	public static <T extends Number> Rule<T> minRange(T minRange) {
+		return new MinRangeRule<>(minRange);
 	}
 
-	public static Rule match(String regex) {
+	public static Rule<String> match(String regex) {
 		return new MatchRule(regex);
 	}
 }

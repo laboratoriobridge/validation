@@ -3,15 +3,15 @@ package br.ufsc.bridge.platform.validation.rules;
 import br.ufsc.bridge.platform.validation.engine.Rule;
 import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MinRangeRule implements Rule<Number> {
+public class MinRangeRule<T extends Number> implements Rule<T> {
 
-	private final Number minRange;
+	private final T minRange;
 
-	public MinRangeRule(Number minRange) {
+	public MinRangeRule(T minRange) {
 		this.minRange = minRange;
 	}
 
-	@Override public String validate(Number value) {
+	@Override public String validate(T value) {
 		if (!Util.isEmpty(value) && value.doubleValue() < this.minRange.doubleValue()) {
 			return "Deve ser maior ou igual a " + this.minRange;
 		}

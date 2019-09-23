@@ -3,15 +3,15 @@ package br.ufsc.bridge.platform.validation.rules;
 import br.ufsc.bridge.platform.validation.engine.Rule;
 import br.ufsc.bridge.platform.validation.util.Util;
 
-public class MaxRangeRule implements Rule<Number> {
+public class MaxRangeRule<T extends Number> implements Rule<T> {
 
-	private final Number maxRange;
+	private final T maxRange;
 
-	public MaxRangeRule(Number maxRange) {
+	public MaxRangeRule(T maxRange) {
 		this.maxRange = maxRange;
 	}
 
-	@Override public String validate(Number value) {
+	@Override public String validate(T value) {
 		if (!Util.isEmpty(value) && value.doubleValue() > this.maxRange.doubleValue()) {
 			return "Deve ser menor ou igual a " + this.maxRange;
 		}

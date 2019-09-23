@@ -1,7 +1,7 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class FormErrorTest {
 
 		SubForm subform = new SubForm();
 		subform.setNome("José");
-		form.setList(Arrays.asList(subform));
+		form.setList(Collections.singletonList(subform));
 
 		FormError errors = new FormErrorImpl(form);
 
@@ -47,7 +47,7 @@ public class FormErrorTest {
 	@Test
 	public void invalido() {
 		Form form = new Form();
-		form.setList(Arrays.asList(new SubForm()));
+		form.setList(Collections.singletonList(new SubForm()));
 
 		FormError errors = new FormErrorImpl(form);
 
