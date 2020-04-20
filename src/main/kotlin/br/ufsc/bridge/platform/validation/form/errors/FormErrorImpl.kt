@@ -90,8 +90,16 @@ class FormErrorImpl<T> @JvmOverloads constructor(
         return this.internalErrors.getOrPut(field.alias, { FormErrorImpl(getFieldValue(field)) }) as FormError<E>
     }
 
+    override fun <E> formError(field: MetaField<E>, error: FormError<E>) {
+        this.internalErrors.putIfAbsent(field.alias, error)
+    }
+
     override fun <R> formError(property: KProperty1<T, R>): FormError<R> {
         return this.internalErrors.getOrPut(property.name, { FormErrorImpl(getPropertyValue(property)) }) as FormError<R>
+    }
+
+    override fun <R> formError(property: KProperty1<T, R?>, error: FormError<R>) {
+        this.internalErrors.putIfAbsent(property.name, error)
     }
 
     override fun <E> listError(field: MetaList<E>): ListError<E> {

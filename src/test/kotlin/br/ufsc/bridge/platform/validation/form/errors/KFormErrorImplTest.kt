@@ -99,6 +99,34 @@ class KFormErrorImplTest {
     }
 
     @Test
+    fun `should have errors on the sub form`() {
+        val form = Form()
+
+        val errors = FormErrorImpl(form)
+
+        val subErrors = errors.formError(Form::sub)
+
+        subErrors.fieldError(SubForm::nome, "invalid name")
+
+        Assert.assertFalse(errors.isValid)
+    }
+
+    @Test
+    fun `should accept external errors on the sub form`() {
+        val form = Form()
+
+        val errors = FormErrorImpl(form)
+
+        val subErrors = FormErrorImpl(form.sub)
+
+        subErrors.fieldError(SubForm::nome, "invalid name")
+
+        errors.formError(Form::sub, subErrors)
+
+        Assert.assertFalse(errors.isValid)
+    }
+
+    @Test
     fun listRootError() {
         val form = Form()
 

@@ -112,6 +112,34 @@ public class FormErrorTest {
 	}
 
 	@Test
+	public void shouldHaveErrorsOnTheSubForm() {
+		Form form = new Form();
+
+		FormErrorImpl<Form> errors = new FormErrorImpl<>(form);
+
+		FormError<SubForm> subErrors = errors.formError(meta.sub());
+
+		subErrors.fieldError(MFormErrorTest_SubForm.meta.nome, "invalid name");
+
+		Assert.assertFalse(errors.isValid());
+	}
+
+	@Test
+	public void shouldAcceptExternalErrorsOnTheSubForm() {
+		Form form = new Form();
+
+		FormErrorImpl<Form> errors = new FormErrorImpl<>(form);
+
+		FormErrorImpl<SubForm> subErrors = new FormErrorImpl<>(form.getSub());
+
+		subErrors.fieldError(MFormErrorTest_SubForm.meta.nome, "invalid name");
+
+		errors.formError(meta.sub(), subErrors);
+
+		Assert.assertFalse(errors.isValid());
+	}
+
+	@Test
 	public void listRootError() {
 		Form form = new Form();
 
