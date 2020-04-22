@@ -1,5 +1,6 @@
 package br.ufsc.bridge.platform.validation.form.errors;
 
+
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -109,6 +110,48 @@ public class FormErrorTest {
 
 		Assert.assertFalse(errors.isValid());
 		Assert.assertEquals("Objeto inválido", ((Map) errors.getErrors()).get(meta.sub().getAlias()));
+	}
+
+	@Test
+	public void shouldHaveErrorsOnTheSubForm() {
+		Form form = new Form();
+
+		FormErrorImpl<Form> errors = new FormErrorImpl<>(form);
+
+		FormError<SubForm> subErrors = errors.formError(meta.sub());
+
+		subErrors.fieldError(MFormErrorTest_SubForm.meta.nome, "invalid name");
+
+		Assert.assertFalse(errors.isValid());
+	}
+
+	@Test
+	public void shouldAcceptExternalErrorsOnTheSubForm() {
+		Form form = new Form();
+
+		FormErrorImpl<Form> errors = new FormErrorImpl<>(form);
+
+		FormErrorImpl<SubForm> subErrors = new FormErrorImpl<>(form.getSub());
+
+		subErrors.fieldError(MFormErrorTest_SubForm.meta.nome, "invalid name");
+
+		errors.formError(meta.sub(), subErrors);
+
+		Assert.assertFalse(errors.isValid());
+	}
+
+	@Test(expected = FormErrorAlreadySetException.class)
+	public void shouldNotAcceptSettingExternalErrorsOnTheSubFormMoreThanOnce() {
+		Form form = new Form();
+
+		FormErrorImpl<Form> errors = new FormErrorImpl<>(form);
+
+		FormErrorImpl<SubForm> subErrors = new FormErrorImpl<>(form.getSub());
+
+		subErrors.fieldError(MFormErrorTest_SubForm.meta.nome, "invalid name");
+
+		errors.formError(meta.sub(), subErrors);
+		errors.formError(meta.sub(), subErrors);
 	}
 
 	@Test

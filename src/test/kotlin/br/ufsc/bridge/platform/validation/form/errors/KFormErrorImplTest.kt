@@ -1,7 +1,9 @@
 package br.ufsc.bridge.platform.validation.form.errors
 
 import br.ufsc.bridge.platform.validation.rules.Rules
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.LocalDate
 
@@ -17,20 +19,19 @@ class KFormErrorImplTest {
         form.list = listOf(subform)
 
         val errors = FormErrorImpl(form)
-
         errors
-                .check(Form::cep, Rules.cep)
-                .check(Form::cnpj, Rules.cnpj)
-                .check(Form::cns, Rules.cns)
-                .check(Form::cpf, Rules.cpf)
-                .check(Form::email, Rules.email)
-                .check(Form::hora, Rules.hour)
-                .check(Form::maxDate, Rules.beforeToday)
-                .check(Form::required, Rules.required)
-                .check(Form::telefone, Rules.phone)
-                .forEach(Form::list) { item, itemError -> itemError.check(SubForm::nome, Rules.required) }
+            .check(Form::cep, Rules.cep)
+            .check(Form::cnpj, Rules.cnpj)
+            .check(Form::cns, Rules.cns)
+            .check(Form::cpf, Rules.cpf)
+            .check(Form::email, Rules.email)
+            .check(Form::hora, Rules.hour)
+            .check(Form::maxDate, Rules.beforeToday)
+            .check(Form::required, Rules.required)
+            .check(Form::telefone, Rules.phone)
+            .forEach(Form::list) { item, itemError -> itemError.check(SubForm::nome, Rules.required) }
 
-        Assert.assertTrue(errors.isValid)
+        assertTrue(errors.isValid)
     }
 
     @Test
@@ -41,19 +42,19 @@ class KFormErrorImplTest {
         val errors = FormErrorImpl(form)
 
         errors
-                .check(Form::cep, Rules.cep)
-                .check(Form::cnpj, Rules.cnpj)
-                .check(Form::cns, Rules.cns)
-                .check(Form::cpf, Rules.cpf)
-                .check(Form::email, Rules.email)
-                .check(Form::hora, Rules.hour)
-                .check(Form::maxDate, Rules.beforeToday)
-                .check(Form::required, Rules.required)
-                .check(Form::telefone, Rules.phone)
-                .forEach(Form::list) { item, itemError -> itemError.check(SubForm::nome, Rules.required) }
+            .check(Form::cep, Rules.cep)
+            .check(Form::cnpj, Rules.cnpj)
+            .check(Form::cns, Rules.cns)
+            .check(Form::cpf, Rules.cpf)
+            .check(Form::email, Rules.email)
+            .check(Form::hora, Rules.hour)
+            .check(Form::maxDate, Rules.beforeToday)
+            .check(Form::required, Rules.required)
+            .check(Form::telefone, Rules.phone)
+            .forEach(Form::list) { item, itemError -> itemError.check(SubForm::nome, Rules.required) }
 
-        Assert.assertFalse(errors.isValid(Form::list))
-        Assert.assertFalse(errors.isValid)
+        assertFalse(errors.isValid(Form::list))
+        assertFalse(errors.isValid)
     }
 
     @Test
@@ -64,7 +65,7 @@ class KFormErrorImplTest {
 
         errors.fieldError(Form::cep, null)
 
-        Assert.assertTrue(errors.isValid)
+        assertTrue(errors.isValid)
     }
 
     @Test
@@ -75,8 +76,8 @@ class KFormErrorImplTest {
 
         errors.error("Objeto inválido")
 
-        Assert.assertFalse(errors.isValid)
-        Assert.assertEquals("Objeto inválido", errors.errors)
+        assertFalse(errors.isValid)
+        assertEquals("Objeto inválido", errors.errors)
     }
 
     @Test
@@ -89,13 +90,55 @@ class KFormErrorImplTest {
 
         errors.error("Objeto inválido")
 
-        Assert.assertFalse(errors.isValid)
-        Assert.assertEquals("Objeto inválido", errors.errors)
+        assertFalse(errors.isValid)
+        assertEquals("Objeto inválido", errors.errors)
 
         errors.error(null)
 
-        Assert.assertFalse(errors.isValid)
-        Assert.assertEquals("Objeto inválido", (errors.errors as Map<*, *>)[Form::sub.name])
+        assertFalse(errors.isValid)
+        assertEquals("Objeto inválido", (errors.errors as Map<*, *>)[Form::sub.name])
+    }
+
+    @Test
+    fun `should have errors on the sub form`() {
+        val form = Form()
+
+        val errors = FormErrorImpl(form)
+
+        val subErrors = errors.formError(Form::sub)
+
+        subErrors.fieldError(SubForm::nome, "invalid name")
+
+        assertFalse(errors.isValid)
+    }
+
+    @Test
+    fun `should accept external errors on the sub form`() {
+        val form = Form()
+
+        val errors = FormErrorImpl(form)
+
+        val subErrors = FormErrorImpl(form.sub)
+
+        subErrors.fieldError(SubForm::nome, "invalid name")
+
+        errors.formError(Form::sub, subErrors)
+
+        assertFalse(errors.isValid)
+    }
+
+    @Test(expected = FormErrorAlreadySetException::class)
+    fun `should not accept setting external errors on the sub form more than once`() {
+        val form = Form()
+
+        val errors = FormErrorImpl(form)
+
+        val subErrors = FormErrorImpl(form.sub)
+
+        subErrors.fieldError(SubForm::nome, "invalid name")
+
+        errors.formError(Form::sub, subErrors)
+        errors.formError(Form::sub, subErrors)
     }
 
     @Test
@@ -106,8 +149,8 @@ class KFormErrorImplTest {
 
         errors.listError(Form::list).error("Objeto inválido")
 
-        Assert.assertFalse(errors.isValid)
-        Assert.assertEquals("Objeto inválido", (errors.errors as Map<*, *>)[Form::list.name])
+        assertFalse(errors.isValid)
+        assertEquals("Objeto inválido", (errors.errors as Map<*, *>)[Form::list.name])
     }
 
     @Test
@@ -116,7 +159,7 @@ class KFormErrorImplTest {
 
         errors.check(Form::nome, Rules.required)
 
-        Assert.assertFalse(errors.isValid)
+        assertFalse(errors.isValid)
     }
 
     @Test
@@ -124,10 +167,10 @@ class KFormErrorImplTest {
         val errors = FormErrorImpl<Form>(null)
 
         errors
-                .check(Form::cpf, Rules.required)
-                .check(Form::cpf, Rules.cpf)
+            .check(Form::cpf, Rules.required)
+            .check(Form::cpf, Rules.cpf)
 
-        Assert.assertFalse(errors.isValid)
+        assertFalse(errors.isValid)
     }
 
     class Form {

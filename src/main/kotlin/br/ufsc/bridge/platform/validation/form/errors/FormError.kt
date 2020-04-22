@@ -23,7 +23,11 @@ interface FormError<T> : ValidationError {
 
     fun <E> formError(field: MetaField<E>): FormError<E>
 
+    fun <E> formError(field: MetaField<E>, error: FormError<E>)
+
     fun <R> formError(property: KProperty1<T, R>): FormError<R>
+
+    fun <R> formError(property: KProperty1<T, R?>, error: FormError<R>)
 
     fun <E> listError(field: MetaList<E>): ListError<E>
 

@@ -4,6 +4,7 @@ import br.ufsc.bridge.metafy.MetaField
 import br.ufsc.bridge.metafy.MetaList
 import br.ufsc.bridge.platform.validation.engine.Rule
 import br.ufsc.bridge.platform.validation.util.Reflections
+import java.lang.RuntimeException
 import java.util.function.BiConsumer
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
@@ -90,8 +91,18 @@ class FormErrorImpl<T> @JvmOverloads constructor(
         return this.internalErrors.getOrPut(field.alias, { FormErrorImpl(getFieldValue(field)) }) as FormError<E>
     }
 
+    override fun <E> formError(field: MetaField<E>, error: FormError<E>) {
+        if (this.internalErrors.containsKey(field.alias)) throw FormErrorAlreadySetException()
+        this.internalErrors[field.alias] = error
+    }
+
     override fun <R> formError(property: KProperty1<T, R>): FormError<R> {
         return this.internalErrors.getOrPut(property.name, { FormErrorImpl(getPropertyValue(property)) }) as FormError<R>
+    }
+
+    override fun <R> formError(property: KProperty1<T, R?>, error: FormError<R>) {
+        if (this.internalErrors.containsKey(property.name)) throw FormErrorAlreadySetException()
+        this.internalErrors[property.name] = error
     }
 
     override fun <E> listError(field: MetaList<E>): ListError<E> {
@@ -168,3 +179,5 @@ class FormErrorImpl<T> @JvmOverloads constructor(
         }
 
 }
+
+class FormErrorAlreadySetException() : RuntimeException("FormError already set for this property")
