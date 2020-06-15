@@ -32,8 +32,7 @@ class ListErrorImpl<T>(private val target: List<T>?) : ListError<T> {
                 this.rootError as String
             } else {
                 itemErrors
-                        .map { { it.errors } }
-                        .toList()
+                    .map { it.errors }
             }
 
 
