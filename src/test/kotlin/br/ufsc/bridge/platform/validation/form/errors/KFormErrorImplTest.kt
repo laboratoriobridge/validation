@@ -37,7 +37,7 @@ class KFormErrorImplTest {
     @Test
     fun invalido() {
         val form = Form()
-        form.list = listOf(SubForm())
+        form.list = listOf(SubForm(), SubForm(), SubForm())
 
         val errors = FormErrorImpl(form)
 
