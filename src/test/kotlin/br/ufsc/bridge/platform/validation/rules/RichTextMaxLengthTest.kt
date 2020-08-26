@@ -15,7 +15,6 @@ class RichTextMaxLengthTest : ValidationTest() {
     @Test
     fun `Atributo com length maior que o max eh invalido`() {
         assertNotNull(validate("Lorem <em>dolor</em> sit <strong>ipsum</strong>.", richTextMaxLength(20)))
-
     }
 
     @Test
