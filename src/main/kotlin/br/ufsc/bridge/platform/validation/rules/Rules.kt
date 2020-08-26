@@ -62,4 +62,9 @@ object Rules {
     fun match(regex: String): Rule<String?> {
         return MatchRule(regex)
     }
+
+    @JvmStatic
+    fun richTextMaxLength(maxLength: Int): RichTextMaxLengthRule {
+        return RichTextMaxLengthRule(maxLength)
+    }
 }
