@@ -67,4 +67,9 @@ object Rules {
     fun richTextMaxLength(maxLength: Int): RichTextMaxLengthRule {
         return RichTextMaxLengthRule(maxLength)
     }
+
+    @JvmStatic
+    fun richTextMinLength(minLength: Int): RichtTextMinLengthRule {
+        return RichtTextMinLengthRule(minLength)
+    }
 }
