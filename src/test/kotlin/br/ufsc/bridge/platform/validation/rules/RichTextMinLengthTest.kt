@@ -7,17 +7,17 @@ import kotlin.test.assertNull
 
 class RichTextMinLengthTest : ValidationTest() {
     @Test
-    fun `Atributo null nao eh valido`() {
+    fun `Atributo null eh invalido`() {
         assertNotNull(validate(null, Rules.richTextMinLength(10)))
     }
 
     @Test
-    fun `Atributo apenas com tags nao eh valido`() {
+    fun `Atributo apenas com tags eh invalido`() {
         assertNotNull(validate("<p><br></p>", Rules.richTextMinLength(10)))
     }
 
     @Test
-    fun `Atributo com tags e espacos em branco nao eh valido`() {
+    fun `Atributo com tags e espacos em branco eh invalido`() {
         assertNotNull(validate("<p>  </p>", Rules.richTextMinLength(1)))
     }
 
