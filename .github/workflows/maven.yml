@@ -25,4 +25,5 @@ jobs:
     - name: Build with Maven
       run: mvn clean verify
 
-    # TODO: readme + codecov
+    - name: Upload codecov report
+      uses: codecov/codecov-action@v1.5.2
