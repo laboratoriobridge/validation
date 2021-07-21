@@ -13,7 +13,7 @@ public class LengthRule implements Rule<String> {
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && value.length() != this.length) {
-			return "Deve possuir " + this.length + " caracteres";
+			return "Deve possuir " + this.length + " caractere(s)";
 		}
 		return null;
 	}

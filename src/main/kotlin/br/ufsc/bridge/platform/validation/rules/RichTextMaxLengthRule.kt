@@ -9,6 +9,6 @@ class RichTextMaxLengthRule(private val maxLength: Int) : Rule<String?> {
 
     override fun validate(value: String?): String? {
         val text = StringEscapeUtils.unescapeHtml4(value?.replace(RegexUtil.HTML_TAG_PATTERN, ""))
-        return if (!Util.isEmpty(text) && text?.length!! > maxLength) "Deve possuir no máximo $maxLength caracteres" else null
+        return if (!Util.isEmpty(text) && text?.length!! > maxLength) "Deve possuir no máximo $maxLength caractere(s)" else null
     }
 }
