@@ -254,6 +254,13 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <!-- Prevent gpg from using pinentry programs -->
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -265,11 +272,11 @@
             <distributionManagement>
                 <repository>
                     <id>repo-bridge</id>
-                    <url>${NEXUS_PUBLIC_URL}</url>
+                    <url>${env.NEXUS_PUBLIC_URL}</url>
                 </repository>
                 <snapshotRepository>
                     <id>repo-bridge</id>
-                    <url>${NEXUS_SNAPSHOT_URL}</url>
+                    <url>${env.NEXUS_SNAPSHOT_URL}</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
