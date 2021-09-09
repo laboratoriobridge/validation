@@ -1,0 +1,35 @@
+name: Release to Maven Central and Nexus
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up JDK and GPG private key
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+          gpg-private-key: ${{ secrets.MVN_RELEASE_GPG_PRIVATE_KEY }}
+      
+      - name: Prepare the release
+        run: mvn release:prepare -Possrh
+        
+      - name: Push the release to Maven Central
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+        run: mvn release:perform -Possrh
+        
+      - name: Push the release to Nexus
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          NEXUS_PUBLIC_URL: ${{ secrets.NEXUS_PUBLIC_URL }}
+          NEXUS_SNAPSHOT_URL: ${{ secrets.NEXUS_SNAPSHOT_URL }}
+        run: mvn deploy -Prepo-bridge
