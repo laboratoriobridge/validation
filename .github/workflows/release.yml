@@ -8,7 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+
+        
       
       - name: Set up JDK, Maven Central credentials and GPG key
         uses: actions/setup-java@v2
@@ -30,7 +35,6 @@ jobs:
       - name: Prepare the release
         env:
           MVN_RELEASE_GPG_PASSPHRASE: ${{ secrets.MVN_RELEASE_GPG_PASSPHRASE }}
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: mvn -B release:prepare -Possrh
   
       - name: Push the release to Maven Central
