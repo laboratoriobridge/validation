@@ -1,0 +1,51 @@
+name: Release to Maven Central and Nexus
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up JDK, Maven Central credentials and GPG key
+        uses: actions/setup-java@v2
+        with: # Create the settings.xml with Maven Central credentials and GPG private key
+          java-version: '8'
+          distribution: 'zulu'
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          # The private key to sign artifacts. Will be imported into the GPG keychain of runner
+          gpg-private-key: ${{ secrets.MVN_RELEASE_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MVN_RELEASE_GPG_PASSPHRASE
+      
+      - name: Prepare the release
+        env:
+          MVN_RELEASE_GPG_PASSPHRASE: ${{ secrets.MVN_RELEASE_GPG_PASSPHRASE }}
+        run: mvn release:prepare -Possrh
+  
+      - name: Push the release to Maven Central
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+        run: mvn release:perform -Possrh
+        
+      - name: Set up JDK and Nexus credentials
+        uses: actions/setup-java@v2
+        with: # Will overwrite the settings.xml created for Maven Central
+          java-version: '8'
+          distribution: 'zulu'
+          server-id: repo-bridge
+          server-username: NEXUS_USERNAME
+          server-password: NEXUS_PASSWORD
+        
+      - name: Push the release to Nexus
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          NEXUS_PUBLIC_URL: ${{ secrets.NEXUS_PUBLIC_URL }}
+          NEXUS_SNAPSHOT_URL: ${{ secrets.NEXUS_SNAPSHOT_URL }}
+        run: mvn deploy -Prepo-bridge
