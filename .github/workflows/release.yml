@@ -21,6 +21,9 @@ jobs:
           # The private key to sign artifacts. Will be imported into the GPG keychain of runner
           gpg-private-key: ${{ secrets.MVN_RELEASE_GPG_PRIVATE_KEY }}
           gpg-passphrase: MVN_RELEASE_GPG_PASSPHRASE
+          
+      - name: Compile
+        run: mvn -b package 
       
       - name: Prepare the release
         env:
