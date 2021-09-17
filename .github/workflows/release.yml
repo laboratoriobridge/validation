@@ -23,7 +23,7 @@ jobs:
           gpg-passphrase: MVN_RELEASE_GPG_PASSPHRASE
           
       - name: Compile
-        run: mvn -b package 
+        run: mvn -B package 
       
       - name: Prepare the release
         env:
