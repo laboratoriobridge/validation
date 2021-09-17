@@ -25,7 +25,7 @@ jobs:
       - name: Prepare the release
         env:
           MVN_RELEASE_GPG_PASSPHRASE: ${{ secrets.MVN_RELEASE_GPG_PASSPHRASE }}
-        run: mvn release:prepare -X --no-tty -Possrh
+        run: mvn release:prepare -X -Possrh
   
       - name: Push the release to Maven Central
         env:
