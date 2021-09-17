@@ -31,7 +31,7 @@ jobs:
         env:
           MVN_RELEASE_GPG_PASSPHRASE: ${{ secrets.MVN_RELEASE_GPG_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn release:prepare -X -Possrh
+        run: mvn release:prepare -Possrh
   
       - name: Push the release to Maven Central
         env:
