@@ -276,9 +276,9 @@
     </profiles>
 
     <scm>
-        <connection>scm:git:https@github.com:laboratoriobridge/validation.git</connection>
-        <url>scm:git:https@github.com:laboratoriobridge/validation.git</url>
-        <developerConnection>scm:git:https@github.com:laboratoriobridge/validation.git</developerConnection>
+        <connection>scm:git:https://github.com:laboratoriobridge/validation.git</connection>
+        <url>scm:git:https://github.com:laboratoriobridge/validation.git</url>
+        <developerConnection>scm:git:https://github.com:laboratoriobridge/validation.git</developerConnection>
         <tag>1.4.4</tag>
     </scm>
 </project>
