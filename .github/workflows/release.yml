@@ -22,6 +22,11 @@ jobs:
           gpg-private-key: ${{ secrets.MVN_RELEASE_GPG_PRIVATE_KEY }}
           gpg-passphrase: MVN_RELEASE_GPG_PASSPHRASE
       
+      - name: Configure Git User
+        run: |
+            git config user.email "actions@github.com"
+            git config user.name "GitHub Actions"
+      
       - name: Prepare the release
         env:
           MVN_RELEASE_GPG_PASSPHRASE: ${{ secrets.MVN_RELEASE_GPG_PASSPHRASE }}
