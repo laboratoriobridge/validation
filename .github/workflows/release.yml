@@ -41,6 +41,7 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MVN_RELEASE_GPG_PASSPHRASE: ${{ secrets.MVN_RELEASE_GPG_PASSPHRASE }}
         run: mvn release:perform -Possrh
         
       - name: Set up JDK and Nexus credentials
