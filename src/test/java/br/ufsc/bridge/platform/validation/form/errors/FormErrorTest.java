@@ -187,6 +187,64 @@ public class FormErrorTest {
 		Assert.assertFalse(errors.isValid());
 	}
 
+	@Test
+	public void shouldReturnNullMessageIfIsValid() {
+		Form form = new Form();
+		FormError errors = new FormErrorImpl<>(form);
+		Assert.assertNull(errors.message());
+	}
+
+	@Test
+	public void shouldReturnFormRootErrorMessage() {
+		Form form = new Form();
+		FormError errors = new FormErrorImpl<>(form);
+		errors.error("Form root error message");
+		Assert.assertEquals(errors.message(), "Form root error message");
+	}
+
+	@Test
+	public void shouldPrioritizeRootErrorOverFieldError() {
+		Form form = new Form();
+		FormError errors = new FormErrorImpl<>(form);
+		errors.fieldError(meta.cep, "Form field error message");
+		errors.error("Form root error message");
+		Assert.assertEquals(errors.message(), "Form root error message");
+	}
+
+	@Test
+	public void shouldReturnFormFieldErrorMessage() {
+		Form form = new Form();
+		FormError errors = new FormErrorImpl<>(form);
+		errors.fieldError(meta.cep, "Form field error message");
+		Assert.assertEquals(errors.message(), "Form field error message");
+	}
+
+	@Test
+	public void shouldPrioritizeFormRootErrorOverSubformRootError() {
+		Form form = new Form();
+		FormError errors = new FormErrorImpl<>(form);
+		errors.error("Form root error message");
+		errors.formError(meta.sub()).error("Subform root error message");
+		Assert.assertEquals(errors.message(), "Form root error message");
+	}
+
+	@Test
+	public void shouldReturnSubFormRootErrorMessage() {
+		Form form = new Form();
+		FormError errors = new FormErrorImpl<>(form);
+		errors.formError(meta.sub()).error("Subform root error message");
+		Assert.assertEquals(errors.message(), "Subform root error message");
+	}
+
+	@Test
+	public void shouldReturnSubFormFieldErrorMessage() {
+		Form form = new Form();
+		FormError<Form> errors = new FormErrorImpl<>(form);
+		FormError<SubForm> subErrors = errors.formError(meta.sub());
+		subErrors.fieldError(MFormErrorTest_SubForm.meta.nome, "Subform field error message");
+		Assert.assertEquals(errors.message(), "Subform field error message");
+	}
+
 	@Metafy
 	public static class Form {
 		private String cep;
