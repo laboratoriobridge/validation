@@ -41,4 +41,5 @@ interface FormError<T> : ValidationError {
 
     fun <R : List<E>?, E : Any?> forEach(property: KProperty1<T, R>, itemValidator: (E, FormError<E>) -> Unit): FormError<T>
 
+    fun message(): String?
 }

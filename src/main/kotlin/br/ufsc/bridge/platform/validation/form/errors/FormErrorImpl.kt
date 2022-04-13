@@ -10,9 +10,9 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
 
 class FormErrorImpl<T> @JvmOverloads constructor(
-        private val target: T? = null,
-        private val internalErrors: HashMap<String, Any> = HashMap(),
-        private var rootError: String? = null
+    private val target: T? = null,
+    private val internalErrors: HashMap<String, Any> = HashMap(),
+    private var rootError: String? = null
 ) : FormError<T> {
     override val isValid: Boolean
         get() {
@@ -178,6 +178,22 @@ class FormErrorImpl<T> @JvmOverloads constructor(
             }
         }
 
+    override fun message(): String? {
+        if (!isValid) {
+            if (rootError != null) {
+                return rootError as String
+            } else {
+                internalErrors.values.forEach { value ->
+                    return if (value is FormErrorImpl<*>) {
+                        value.message()
+                    } else {
+                        value as String
+                    }
+                }
+            }
+        }
+        return null
+    }
 }
 
 class FormErrorAlreadySetException() : RuntimeException("FormError already set for this property")
