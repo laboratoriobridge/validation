@@ -15,6 +15,8 @@ public class TelefoneRule implements Rule<String> {
 	}
 
 	private boolean hasTodosNumerosIguais(String value) {
+		if (value.length() < 2) return false;
+
 		CharSequence telefoneSemDDD = value.subSequence(2, value.length());
 		for (int i = 0; i < telefoneSemDDD.length(); i++) {
 			if (telefoneSemDDD.charAt(0) != telefoneSemDDD.charAt(i)) {
