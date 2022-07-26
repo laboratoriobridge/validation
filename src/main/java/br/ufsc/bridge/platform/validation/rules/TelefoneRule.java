@@ -8,15 +8,13 @@ public class TelefoneRule implements Rule<String> {
 	private MatchRule match = new MatchRule("^\\d{2}9?\\d{8}$");
 
 	@Override public String validate(String value) {
-		if (!Util.isEmpty(value) && (this.hasTodosNumerosIguais(value) || !this.match.isValid(value))) {
+		if (!Util.isEmpty(value) && (!this.match.isValid(value) || this.hasTodosNumerosIguais(value))) {
 			return "Campo inválido";
 		}
 		return null;
 	}
 
 	private boolean hasTodosNumerosIguais(String value) {
-		if (value.length() < 2) return false;
-
 		CharSequence telefoneSemDDD = value.subSequence(2, value.length());
 		for (int i = 0; i < telefoneSemDDD.length(); i++) {
 			if (telefoneSemDDD.charAt(0) != telefoneSemDDD.charAt(i)) {
