@@ -69,7 +69,7 @@ object Rules {
     }
 
     @JvmStatic
-    fun richTextMinLength(minLength: Int): RichtTextMinLengthRule {
-        return RichtTextMinLengthRule(minLength)
+    fun richTextMinLength(minLength: Int): RichTextMinLengthRule {
+        return RichTextMinLengthRule(minLength)
     }
 }

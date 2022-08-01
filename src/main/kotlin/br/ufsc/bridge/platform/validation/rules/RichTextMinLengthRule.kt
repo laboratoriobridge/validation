@@ -5,7 +5,7 @@ import br.ufsc.bridge.platform.validation.util.RegexUtil
 import br.ufsc.bridge.platform.validation.util.Util
 import org.apache.commons.text.StringEscapeUtils
 
-class RichtTextMinLengthRule(private val minLength: Int) : Rule<String?> {
+class RichTextMinLengthRule(private val minLength: Int) : Rule<String?> {
 
     override fun validate(value: String?): String? {
         val text = StringEscapeUtils.unescapeHtml4(value?.replace(RegexUtil.HTML_TAG_PATTERN, ""))
