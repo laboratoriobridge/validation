@@ -35,6 +35,8 @@ public class TelefoneTest extends ValidationTest {
 
 		Assert.assertNull("Número com 10 dígitos é válido", this.validate("4896311234", Rules.phone));
 
+		Assert.assertNotNull("Número com 1 dígito é inválido", this.validate("4", Rules.phone));
+
 		Assert.assertNotNull("Número com 9 dígitos é inválido", this.validate("496311234", Rules.phone));
 
 		Assert.assertNotNull("Número com 8 dígitos é inválido", this.validate("96311234", Rules.phone));
