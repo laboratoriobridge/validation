@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.ufsc.bridge</groupId>
@@ -86,6 +87,18 @@
             <version>1.9</version>
         </dependency>
     </dependencies>
+
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>repo-bridge</id>
+            <url>https://repositorio.bridge.ufsc.br/repository/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -219,9 +232,6 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>ossrh</releaseProfiles>
-                    <goals>deploy</goals>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
@@ -230,15 +240,8 @@
     </build>
 
     <profiles>
-        <!-- MAVEN CENTRAL -->
         <profile>
-            <id>ossrh</id>
-            <distributionManagement>
-                <repository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
+            <id>release</id>
             <build>
                 <plugins>
                     <plugin>
@@ -258,24 +261,9 @@
                 </plugins>
             </build>
         </profile>
-
-        <!-- NEXUS -->
-        <profile>
-            <id>repo-bridge</id>
-            <distributionManagement>
-                <repository>
-                    <id>repo-bridge</id>
-                    <url>${env.NEXUS_PUBLIC_URL}</url>
-                </repository>
-                <snapshotRepository>
-                    <id>repo-bridge</id>
-                    <url>${env.NEXUS_SNAPSHOT_URL}</url>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
     </profiles>
 
-   <scm>
+    <scm>
         <connection>scm:git:git@github.com:laboratoriobridge/validation.git</connection>
         <url>scm:git:git@github.com:laboratoriobridge/validation.git</url>
         <developerConnection>scm:git:git@github.com:laboratoriobridge/validation.git</developerConnection>
