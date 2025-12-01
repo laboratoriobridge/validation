@@ -6,7 +6,7 @@ import br.ufsc.bridge.platform.validation.util.Util;
 public class CnsRule implements Rule<String> {
 
 	private final static String CNS1 = "^[1-2][0-9]{10}00[0-1][0-9]$";
-	private final static String CNS2 = "^[7-9][0-9]{14}$";
+	private final static String CNS2 = "^[57-9][0-9]{14}$";
 
 	@Override public String validate(String value) {
 		if (!Util.isEmpty(value) && !this.isValid(value)) {
