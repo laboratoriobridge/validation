@@ -3,7 +3,7 @@ import { msg } from '..'
 import { length } from './length'
 
 const CNS1 = '^[1-2][0-9]{10}00[0-1][0-9]$'
-const CNS2 = '^[7-9][0-9]{14}$'
+const CNS2 = '^[57-9][0-9]{14}$'
 
 function somaPonderada(cnsValue: string) {
     let soma = 0
