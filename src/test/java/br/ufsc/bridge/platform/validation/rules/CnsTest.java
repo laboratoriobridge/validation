@@ -18,6 +18,8 @@ public class CnsTest extends ValidationTest {
 	public void testarValorDeCns() {
 		Assert.assertNull("975055825130003 é um Cns válido", this.validate("975055825130003", Rules.cns));
 
+		Assert.assertNull("586309087428878 é um Cns válido", this.validate("586309087428878", Rules.cns));
+
 		Assert.assertNull("118725165660004 é um Cns válido", this.validate("118725165660004", Rules.cns));
 
 		Assert.assertNull("218342347130008 é um Cns válido", this.validate("218342347130008", Rules.cns));
@@ -29,6 +31,8 @@ public class CnsTest extends ValidationTest {
 		Assert.assertNull("949504471340005 é um Cns válido", this.validate("949504471340005", Rules.cns));
 
 		Assert.assertNotNull("O Cns é invalido", this.validate("109878998754646", Rules.cns));
+
+		Assert.assertNotNull("O Cns é invalido", this.validate("594516874912612", Rules.cns));
 
 		Assert.assertNotNull("O Cns é invalido", this.validate("236951545487965", Rules.cns));
 
@@ -45,8 +49,6 @@ public class CnsTest extends ValidationTest {
 		Assert.assertNotNull("O Cns não pode comeaçar com 3", this.validate("382411439520003", Rules.cns));
 
 		Assert.assertNotNull("O Cns não pode comeaçar com 4", this.validate("431439904710009", Rules.cns));
-
-		Assert.assertNotNull("O Cns não pode comeaçar com 5", this.validate("562593396660002", Rules.cns));
 
 		Assert.assertNotNull("O Cns não pode comeaçar com 6", this.validate("667429114440003", Rules.cns));
 
